@@ -19,7 +19,7 @@ export default function Header() {
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <Logo className="h-8 w-8" />
-          <span className="text-lg font-bold tracking-tight">Apex OilSeals</span>
+          <span className="text-lg font-bold tracking-tight">SBO OilSeals</span>
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
           {nav.map((n) => (

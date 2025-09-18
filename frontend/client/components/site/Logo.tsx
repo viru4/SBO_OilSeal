@@ -1,4 +1,4 @@
-import * as React from "react";
+// No React import needed for this component
 
 export function Logo({ className = "h-7 w-7" }: { className?: string }) {
   return (

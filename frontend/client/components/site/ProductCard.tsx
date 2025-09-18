@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export interface ProductItem {
@@ -8,7 +9,11 @@ export interface ProductItem {
   sku: string;
 }
 
-export default function ProductCard({ item }: { item: ProductItem }) {
+interface ProductCardProps {
+  item: ProductItem;
+}
+
+function ProductCard({ item }: ProductCardProps) {
   return (
     <Card className="transition hover:shadow-lg">
       <CardContent className="p-6">
@@ -37,3 +42,6 @@ export default function ProductCard({ item }: { item: ProductItem }) {
     </Card>
   );
 }
+
+// Memoize the component to prevent unnecessary re-renders
+export default memo(ProductCard);

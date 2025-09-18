@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="mt-24 border-t">
       <div className="container grid gap-8 py-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="text-xl font-bold">Apex OilSeals</div>
+          <div className="text-xl font-bold">SBO OilSeals</div>
           <p className="mt-3 text-sm text-muted-foreground">
             Precision oil seals engineered for reliability. Over 20 years of
             manufacturing excellence.
@@ -24,7 +24,7 @@ export default function Footer() {
           <div className="font-semibold">Contact</div>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
-              <a href="mailto:sales@apexoilseals.com" className="hover:text-primary">sales@apexoilseals.com</a>
+              <a href="mailto:sales@sbooilseals.com" className="hover:text-primary">sales@sbooilseals.com</a>
             </li>
             <li>
               <a href="tel:+11234567890" className="hover:text-primary">+1 (123) 456-7890</a>
@@ -46,7 +46,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t py-6 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Apex OilSeals. All rights reserved.
+        © {new Date().getFullYear()} SBO OilSeals. All rights reserved.
       </div>
     </footer>
   );

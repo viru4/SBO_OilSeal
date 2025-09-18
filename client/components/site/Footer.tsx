@@ -14,21 +14,48 @@ export default function Footer() {
         <div>
           <div className="font-semibold">Company</div>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li><Link to="/" className="hover:text-primary">Home</Link></li>
-            <li><Link to="/products" className="hover:text-primary">Products</Link></li>
-            <li><Link to="/industries" className="hover:text-primary">Industries</Link></li>
-            <li><Link to="/quality" className="hover:text-primary">Quality</Link></li>
-            <li><Link to="/contact" className="hover:text-primary">Contact</Link></li>
+            <li>
+              <Link to="/" className="hover:text-primary">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/products" className="hover:text-primary">
+                Products
+              </Link>
+            </li>
+            <li>
+              <Link to="/industries" className="hover:text-primary">
+                Industries
+              </Link>
+            </li>
+            <li>
+              <Link to="/quality" className="hover:text-primary">
+                Quality
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="hover:text-primary">
+                Contact
+              </Link>
+            </li>
           </ul>
         </div>
         <div>
           <div className="font-semibold">Contact</div>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
-              <a href="mailto:sales@sbooilseals.com" className="hover:text-primary">sales@sbooilseals.com</a>
+              <a
+                href="mailto:sales@sbooilseals.com"
+                className="hover:text-primary"
+              >
+                sales@sbooilseals.com
+              </a>
             </li>
             <li>
-              <a href="tel:+11234567890" className="hover:text-primary">+1 (123) 456-7890</a>
+              <a href="tel:+11234567890" className="hover:text-primary">
+                +1 (123) 456-7890
+              </a>
             </li>
             <li>Mon–Fri, 9:00–18:00</li>
             <li>Ahmedabad, India</li>
@@ -38,10 +65,14 @@ export default function Footer() {
           <div className="font-semibold">Legal</div>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
-              <a href="#" className="hover:text-primary">Privacy Policy</a>
+              <a href="#" className="hover:text-primary">
+                Privacy Policy
+              </a>
             </li>
             <li>
-              <a href="#" className="hover:text-primary">Terms of Service</a>
+              <a href="#" className="hover:text-primary">
+                Terms of Service
+              </a>
             </li>
           </ul>
         </div>

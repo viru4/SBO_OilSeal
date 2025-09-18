@@ -42,7 +42,13 @@ export default function ContactForm() {
           <div className="grid gap-2 sm:grid-cols-2">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" required placeholder="name@company.com" />
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                required
+                placeholder="name@company.com"
+              />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="phone">Phone</Label>
@@ -56,16 +62,31 @@ export default function ContactForm() {
           <div className="grid gap-2 sm:grid-cols-2">
             <div className="grid gap-2">
               <Label htmlFor="product">Product</Label>
-              <Input id="product" name="product" placeholder="e.g. Fork/Shocker Oil Seal" />
+              <Input
+                id="product"
+                name="product"
+                placeholder="e.g. Fork/Shocker Oil Seal"
+              />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="quantity">Quantity</Label>
-              <Input id="quantity" name="quantity" type="number" min={1} placeholder="e.g. 1000" />
+              <Input
+                id="quantity"
+                name="quantity"
+                type="number"
+                min={1}
+                placeholder="e.g. 1000"
+              />
             </div>
           </div>
           <div className="grid gap-2">
             <Label htmlFor="message">Message</Label>
-            <Textarea id="message" name="message" required placeholder="Fork diameter, vehicle, media, temp/pressure, etc." />
+            <Textarea
+              id="message"
+              name="message"
+              required
+              placeholder="Fork diameter, vehicle, media, temp/pressure, etc."
+            />
           </div>
           <Button type="submit" disabled={submitting}>
             {submitting ? "Sending..." : "Send Request"}

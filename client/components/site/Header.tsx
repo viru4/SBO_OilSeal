@@ -61,7 +61,9 @@ export default function Header() {
               </NavLink>
             ))}
             <Button asChild className="mt-2">
-              <Link to="/contact" onClick={() => setOpen(false)}>Request Quote</Link>
+              <Link to="/contact" onClick={() => setOpen(false)}>
+                Request Quote
+              </Link>
             </Button>
           </div>
         </div>

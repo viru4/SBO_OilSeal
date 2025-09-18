@@ -17,9 +17,13 @@ export default function Quality() {
     <section className="container py-14 sm:py-20">
       <div className="grid items-center gap-8 lg:grid-cols-2">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Quality</h1>
+          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            Quality
+          </h1>
           <p className="mt-3 text-muted-foreground">
-            Our quality system is built for consistency: certified raw materials, controlled processes, and rigorous inspection at each stage.
+            Our quality system is built for consistency: certified raw
+            materials, controlled processes, and rigorous inspection at each
+            stage.
           </p>
           <ul className="mt-6 space-y-3 text-sm">
             {features.map((f) => (
@@ -36,7 +40,9 @@ export default function Quality() {
               {stats.map((s) => (
                 <div key={s.v} className="rounded-lg border bg-background p-6">
                   <div className="text-xl font-bold text-primary">{s.k}</div>
-                  <div className="mt-1 text-xs text-muted-foreground">{s.v}</div>
+                  <div className="mt-1 text-xs text-muted-foreground">
+                    {s.v}
+                  </div>
                 </div>
               ))}
             </div>

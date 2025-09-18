@@ -3,7 +3,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import ProductCard from "@/components/site/ProductCard";
 import { FEATURED_PRODUCTS } from "@/data/products";
 import ContactForm from "@/components/site/ContactForm";
-import { CheckCircle2, Cog, Droplets, Factory, Gauge, ShieldCheck, Wrench } from "lucide-react";
+import {
+  CheckCircle2,
+  Cog,
+  Droplets,
+  Factory,
+  Gauge,
+  ShieldCheck,
+  Wrench,
+} from "lucide-react";
 
 export default function Index() {
   return (
@@ -15,13 +23,16 @@ export default function Index() {
         </div>
         <div className="container flex flex-col items-center gap-8 py-16 sm:py-24">
           <div className="inline-flex items-center gap-2 rounded-full border bg-background/60 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
-            <ShieldCheck className="h-4 w-4 text-primary" /> Automotive sealing specialists — 20+ years
+            <ShieldCheck className="h-4 w-4 text-primary" /> Automotive sealing
+            specialists — 20+ years
           </div>
           <h1 className="max-w-4xl text-center text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
             Automotive Oil Seals — Specialized in Motorcycle Shocker/Fork Seals
           </h1>
           <p className="max-w-2xl text-center text-base text-muted-foreground sm:text-lg">
-            SBO OilSeals manufactures high‑performance oil seals exclusively for automobiles, with a specialty in motorcycle shocker/fork seals. Built for leak‑proof performance and long service life.
+            SBO OilSeals manufactures high‑performance oil seals exclusively for
+            automobiles, with a specialty in motorcycle shocker/fork seals.
+            Built for leak‑proof performance and long service life.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button asChild size="lg">
@@ -50,19 +61,47 @@ export default function Index() {
       {/* Products */}
       <section className="container py-16 sm:py-24">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Automotive Oil Seals</h2>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            Automotive Oil Seals
+          </h2>
           <p className="mt-3 text-muted-foreground">
-            Motorcycle fork/shocker seals are our core. We also produce high‑precision oil seals for automotive wheel hubs, engines, and transmissions in NBR, FKM, and PTFE compounds.
+            Motorcycle fork/shocker seals are our core. We also produce
+            high‑precision oil seals for automotive wheel hubs, engines, and
+            transmissions in NBR, FKM, and PTFE compounds.
           </p>
         </div>
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {[
-            { icon: Gauge, title: "Fork/Shocker Oil Seals", desc: "Low stiction, high wear resistance for motorcycle front suspension." },
-            { icon: Cog, title: "Engine & Transmission", desc: "Crank, cam, and gearbox oil seals for automotive applications." },
-            { icon: Droplets, title: "Wheel Hub & Axle", desc: "Reliable sealing against dust, mud, and water ingress." },
-            { icon: Wrench, title: "Custom Automotive Seals", desc: "Design assistance, reverse engineering, and rapid tooling." },
-            { icon: Factory, title: "OEM & Aftermarket", desc: "Consistent supply with PPAP and traceability on request." },
-            { icon: ShieldCheck, title: "Quality Assurance", desc: "100% visual inspection options and material certification." },
+            {
+              icon: Gauge,
+              title: "Fork/Shocker Oil Seals",
+              desc: "Low stiction, high wear resistance for motorcycle front suspension.",
+            },
+            {
+              icon: Cog,
+              title: "Engine & Transmission",
+              desc: "Crank, cam, and gearbox oil seals for automotive applications.",
+            },
+            {
+              icon: Droplets,
+              title: "Wheel Hub & Axle",
+              desc: "Reliable sealing against dust, mud, and water ingress.",
+            },
+            {
+              icon: Wrench,
+              title: "Custom Automotive Seals",
+              desc: "Design assistance, reverse engineering, and rapid tooling.",
+            },
+            {
+              icon: Factory,
+              title: "OEM & Aftermarket",
+              desc: "Consistent supply with PPAP and traceability on request.",
+            },
+            {
+              icon: ShieldCheck,
+              title: "Quality Assurance",
+              desc: "100% visual inspection options and material certification.",
+            },
           ].map(({ icon: Icon, title, desc }) => (
             <Card key={title} className="transition hover:shadow-lg">
               <CardContent className="p-6">
@@ -82,8 +121,13 @@ export default function Index() {
         <div className="mt-16">
           <div className="flex items-end justify-between">
             <div>
-              <h3 className="text-2xl font-bold tracking-tight">Featured Shocker/Fork Seals</h3>
-              <p className="mt-2 text-sm text-muted-foreground">Representative sizes and SKUs. More options available on request.</p>
+              <h3 className="text-2xl font-bold tracking-tight">
+                Featured Shocker/Fork Seals
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Representative sizes and SKUs. More options available on
+                request.
+              </p>
             </div>
             <Button asChild variant="outline">
               <a href="/contact">Request Custom Size</a>
@@ -101,9 +145,12 @@ export default function Index() {
       {/* Segments */}
       <section className="container py-16">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Automotive Segments</h2>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            Automotive Segments
+          </h2>
           <p className="mt-3 text-muted-foreground">
-            We focus on two‑wheelers and automotive platforms where fork and powertrain sealing is critical.
+            We focus on two‑wheelers and automotive platforms where fork and
+            powertrain sealing is critical.
           </p>
         </div>
         <div className="mx-auto mt-8 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3">
@@ -115,7 +162,10 @@ export default function Index() {
             "Aftermarket",
             "OEMs",
           ].map((i) => (
-            <div key={i} className="rounded-md border bg-card px-4 py-3 text-center text-sm font-medium">
+            <div
+              key={i}
+              className="rounded-md border bg-card px-4 py-3 text-center text-sm font-medium"
+            >
               {i}
             </div>
           ))}
@@ -126,9 +176,13 @@ export default function Index() {
       <section id="quality" className="container py-16">
         <div className="grid items-center gap-8 lg:grid-cols-2">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Quality You Can Measure</h2>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              Quality You Can Measure
+            </h2>
             <p className="mt-3 text-muted-foreground">
-              Our quality system is built for consistency: certified raw materials, controlled processes, and rigorous inspection at each stage.
+              Our quality system is built for consistency: certified raw
+              materials, controlled processes, and rigorous inspection at each
+              stage.
             </p>
             <ul className="mt-6 space-y-3 text-sm">
               {[
@@ -153,9 +207,14 @@ export default function Index() {
                   { k: "24–72h", v: "Prototype Leadtime" },
                   { k: "10K+/mo", v: "Scalable Output" },
                 ].map((s) => (
-                  <div key={s.v} className="rounded-lg border bg-background p-6">
+                  <div
+                    key={s.v}
+                    className="rounded-lg border bg-background p-6"
+                  >
                     <div className="text-xl font-bold text-primary">{s.k}</div>
-                    <div className="mt-1 text-xs text-muted-foreground">{s.v}</div>
+                    <div className="mt-1 text-xs text-muted-foreground">
+                      {s.v}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -168,9 +227,12 @@ export default function Index() {
       <section id="contact" className="border-t bg-muted/30 py-16 sm:py-24">
         <div className="container grid items-start gap-10 lg:grid-cols-2">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Request a Quote</h2>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              Request a Quote
+            </h2>
             <p className="mt-3 text-muted-foreground">
-              Tell us about your vehicle and fork dimensions. We’ll recommend the right shocker seal or automotive oil seal and pricing.
+              Tell us about your vehicle and fork dimensions. We’ll recommend
+              the right shocker seal or automotive oil seal and pricing.
             </p>
             <div className="mt-6 rounded-xl border bg-card p-6">
               <div className="grid grid-cols-2 gap-4">

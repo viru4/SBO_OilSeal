@@ -18,6 +18,7 @@ export default function Footer() {
             <li><Link to="/products" className="hover:text-primary">Products</Link></li>
             <li><Link to="/industries" className="hover:text-primary">Industries</Link></li>
             <li><Link to="/quality" className="hover:text-primary">Quality</Link></li>
+            <li><Link to="/contact" className="hover:text-primary">Contact</Link></li>
           </ul>
         </div>
         <div>

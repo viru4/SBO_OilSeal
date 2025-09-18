@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { CheckCircle2, Cog, Droplets, Factory, Gauge, ShieldCheck, Wrench } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import ProductCard, { type ProductItem } from "@/components/site/ProductCard";
 
 export default function Index() {
   const [submitting, setSubmitting] = useState(false);
@@ -78,7 +79,7 @@ SBO OilSeals manufactures high‑performance oil seals exclusively for automobil
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Automotive Oil Seals</h2>
           <p className="mt-3 text-muted-foreground">
-Motorcycle fork/shocker seals are our core. We also produce high‑precision oil seals for automotive wheel hubs, engines, and transmissions in NBR, FKM, and PTFE compounds.
+            Motorcycle fork/shocker seals are our core. We also produce high‑precision oil seals for automotive wheel hubs, engines, and transmissions in NBR, FKM, and PTFE compounds.
           </p>
         </div>
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -102,6 +103,25 @@ Motorcycle fork/shocker seals are our core. We also produce high‑precision oil
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* Featured Products */}
+        <div className="mt-16">
+          <div className="flex items-end justify-between">
+            <div>
+              <h3 className="text-2xl font-bold tracking-tight">Featured Shocker/Fork Seals</h3>
+              <p className="mt-2 text-sm text-muted-foreground">Representative sizes and SKUs. More options available on request.</p>
+            </div>
+            <Button asChild variant="outline">
+              <a href="/contact">Request Custom Size</a>
+            </Button>
+          </div>
+
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {FEATURED_PRODUCTS.map((p) => (
+              <ProductCard key={p.sku} item={p} />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -234,6 +254,51 @@ Tell us about your vehicle and fork dimensions. We’ll recommend the right shoc
     </>
   );
 }
+
+const FEATURED_PRODUCTS: ProductItem[] = [
+  {
+    title: "Fork Seal 31×43×10.5 mm",
+    size: "31×43×10.5 mm",
+    material: "NBR",
+    fits: "Common fits: Hero Splendor/Passion, Honda Shine",
+    sku: "SBO-FS-31043105",
+  },
+  {
+    title: "Fork Seal 33×46×11 mm",
+    size: "33×46×11 mm",
+    material: "NBR",
+    fits: "Common fits: Honda Unicorn, TVS Star",
+    sku: "SBO-FS-3304611",
+  },
+  {
+    title: "Fork Seal 35×48×11 mm",
+    size: "35×48×11 mm",
+    material: "NBR",
+    fits: "Common fits: Suzuki Gixxer, TVS Apache (select variants)",
+    sku: "SBO-FS-3504811",
+  },
+  {
+    title: "Fork Seal 37×50×11 mm",
+    size: "37×50×11 mm",
+    material: "FKM",
+    fits: "Common fits: Bajaj Pulsar 150/180, Honda CB series",
+    sku: "SBO-FS-3705011",
+  },
+  {
+    title: "Fork Seal 39×52×11 mm",
+    size: "39×52×11 mm",
+    material: "NBR",
+    fits: "Common fits: Royal Enfield Thunderbird (select years)",
+    sku: "SBO-FS-3905211",
+  },
+  {
+    title: "Fork Seal 41×54×11 mm",
+    size: "41×54×11 mm",
+    material: "FKM",
+    fits: "Common fits: Yamaha FZ/Fazer, KTM Duke (select models)",
+    sku: "SBO-FS-4105411",
+  },
+];
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (

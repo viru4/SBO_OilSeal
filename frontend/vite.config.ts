@@ -2,13 +2,18 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
-// https://vitejs.dev/config/
+// [https://vitejs.dev/config/](https://vitejs.dev/config/)
 export default defineConfig({
   server: {
     host: "::",
     port: 3000,
     fs: {
-      allow: ["./client", "./shared"],
+      allow: [
+        "C:/Users/Lenovo/OneDrive/Desktop/SBO_OILSEAL/frontend",
+        "C:/Users/Lenovo/OneDrive/Desktop/SBO_OILSEAL/frontend/client",
+        "C:/Users/Lenovo/OneDrive/Desktop/SBO_OILSEAL/frontend/shared"
+
+      ],
       deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**"],
     },
   },

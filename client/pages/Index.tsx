@@ -1,38 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import ProductCard from "@/components/site/ProductCard";
+import { FEATURED_PRODUCTS } from "@/data/products";
+import ContactForm from "@/components/site/ContactForm";
 import { CheckCircle2, Cog, Droplets, Factory, Gauge, ShieldCheck, Wrench } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
-import ProductCard, { type ProductItem } from "@/components/site/ProductCard";
 
 export default function Index() {
-  const [submitting, setSubmitting] = useState(false);
-
-  async function submitForm(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const form = e.currentTarget as HTMLFormElement;
-    const data = Object.fromEntries(new FormData(form).entries());
-
-    try {
-      setSubmitting(true);
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error("Failed to submit");
-      toast.success("Thank you! We’ll get back to you shortly.");
-      form.reset();
-    } catch (err) {
-      toast.error("Something went wrong. Please try again.");
-    } finally {
-      setSubmitting(false);
-    }
-  }
-
   return (
     <>
       {/* Hero */}
@@ -45,14 +18,14 @@ export default function Index() {
             <ShieldCheck className="h-4 w-4 text-primary" /> Automotive sealing specialists — 20+ years
           </div>
           <h1 className="max-w-4xl text-center text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
-Automotive Oil Seals — Specialized in Motorcycle Shocker/Fork Seals
+            Automotive Oil Seals — Specialized in Motorcycle Shocker/Fork Seals
           </h1>
           <p className="max-w-2xl text-center text-base text-muted-foreground sm:text-lg">
-SBO OilSeals manufactures high‑performance oil seals exclusively for automobiles, with a specialty in motorcycle shocker/fork seals. Built for leak‑proof performance and long service life.
+            SBO OilSeals manufactures high‑performance oil seals exclusively for automobiles, with a specialty in motorcycle shocker/fork seals. Built for leak‑proof performance and long service life.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button asChild size="lg">
-              <a href="#contact">Request a Quote</a>
+              <a href="/contact">Request a Quote</a>
             </Button>
             <Button asChild size="lg" variant="outline">
               <a href="/products">View Products</a>
@@ -197,7 +170,7 @@ SBO OilSeals manufactures high‑performance oil seals exclusively for automobil
           <div>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Request a Quote</h2>
             <p className="mt-3 text-muted-foreground">
-Tell us about your vehicle and fork dimensions. We’ll recommend the right shocker seal or automotive oil seal and pricing.
+              Tell us about your vehicle and fork dimensions. We’ll recommend the right shocker seal or automotive oil seal and pricing.
             </p>
             <div className="mt-6 rounded-xl border bg-card p-6">
               <div className="grid grid-cols-2 gap-4">
@@ -208,97 +181,12 @@ Tell us about your vehicle and fork dimensions. We’ll recommend the right shoc
               </div>
             </div>
           </div>
-          <Card>
-            <CardContent className="p-6">
-              <form onSubmit={submitForm} className="grid gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" name="name" required placeholder="Your name" />
-                </div>
-                <div className="grid gap-2 sm:grid-cols-2">
-                  <div className="grid gap-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" name="email" type="email" required placeholder="name@company.com" />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="phone">Phone</Label>
-                    <Input id="phone" name="phone" placeholder="Optional" />
-                  </div>
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="company">Company</Label>
-                  <Input id="company" name="company" placeholder="Company name" />
-                </div>
-                <div className="grid gap-2 sm:grid-cols-2">
-                  <div className="grid gap-2">
-                    <Label htmlFor="product">Product</Label>
-                    <Input id="product" name="product" placeholder="e.g. Rotary Shaft Seal" />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="quantity">Quantity</Label>
-                    <Input id="quantity" name="quantity" type="number" min={1} placeholder="e.g. 1000" />
-                  </div>
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="message">Message</Label>
-                  <Textarea id="message" name="message" required placeholder="Briefly describe your application, dimensions, media, temperature, and pressure." />
-                </div>
-                <Button type="submit" disabled={submitting}>
-                  {submitting ? "Sending..." : "Send Request"}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+          <ContactForm />
         </div>
       </section>
     </>
   );
 }
-
-const FEATURED_PRODUCTS: ProductItem[] = [
-  {
-    title: "Fork Seal 31×43×10.5 mm",
-    size: "31×43×10.5 mm",
-    material: "NBR",
-    fits: "Common fits: Hero Splendor/Passion, Honda Shine",
-    sku: "SBO-FS-31043105",
-  },
-  {
-    title: "Fork Seal 33×46×11 mm",
-    size: "33×46×11 mm",
-    material: "NBR",
-    fits: "Common fits: Honda Unicorn, TVS Star",
-    sku: "SBO-FS-3304611",
-  },
-  {
-    title: "Fork Seal 35×48×11 mm",
-    size: "35×48×11 mm",
-    material: "NBR",
-    fits: "Common fits: Suzuki Gixxer, TVS Apache (select variants)",
-    sku: "SBO-FS-3504811",
-  },
-  {
-    title: "Fork Seal 37×50×11 mm",
-    size: "37×50×11 mm",
-    material: "FKM",
-    fits: "Common fits: Bajaj Pulsar 150/180, Honda CB series",
-    sku: "SBO-FS-3705011",
-  },
-  {
-    title: "Fork Seal 39×52×11 mm",
-    size: "39×52×11 mm",
-    material: "NBR",
-    fits: "Common fits: Royal Enfield Thunderbird (select years)",
-    sku: "SBO-FS-3905211",
-  },
-  {
-    title: "Fork Seal 41×54×11 mm",
-    size: "41×54×11 mm",
-    material: "FKM",
-    fits: "Common fits: Yamaha FZ/Fazer, KTM Duke (select models)",
-    sku: "SBO-FS-4105411",
-  },
-];
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (

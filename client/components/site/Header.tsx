@@ -34,7 +34,7 @@ export default function Header() {
             </NavLink>
           ))}
           <Button asChild className="ml-2">
-            <a href="#contact">Request Quote</a>
+            <Link to="/contact">Request Quote</Link>
           </Button>
         </nav>
         <button
@@ -61,7 +61,7 @@ export default function Header() {
               </NavLink>
             ))}
             <Button asChild className="mt-2">
-              <a href="#contact" onClick={() => setOpen(false)}>Request Quote</a>
+              <Link to="/contact" onClick={() => setOpen(false)}>Request Quote</Link>
             </Button>
           </div>
         </div>

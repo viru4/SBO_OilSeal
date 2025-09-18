@@ -1,62 +1,245 @@
-import { DemoResponse } from "@shared/api";
-import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { CheckCircle2, Cog, Droplets, Factory, Gauge, ShieldCheck, Wrench } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Index() {
-  const [exampleFromServer, setExampleFromServer] = useState("");
-  // Fetch users on component mount
-  useEffect(() => {
-    fetchDemo();
-  }, []);
+  const [submitting, setSubmitting] = useState(false);
 
-  // Example of how to fetch data from the server (if needed)
-  const fetchDemo = async () => {
+  async function submitForm(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget as HTMLFormElement;
+    const data = Object.fromEntries(new FormData(form).entries());
+
     try {
-      const response = await fetch("/api/demo");
-      const data = (await response.json()) as DemoResponse;
-      setExampleFromServer(data.message);
-    } catch (error) {
-      console.error("Error fetching hello:", error);
+      setSubmitting(true);
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error("Failed to submit");
+      toast.success("Thank you! We’ll get back to you shortly.");
+      form.reset();
+    } catch (err) {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
-  };
+  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: FUSION_GENERATION_APP_PLACEHOLDER replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
-          >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-            />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
-        <p className="mt-4 text-slate-600 max-w-md">
-          Watch the chat on the left for updates that might need your attention
-          to finish generating
-        </p>
-        <p className="mt-4 hidden max-w-md">{exampleFromServer}</p>
-      </div>
+    <>
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute left-1/2 top-[-10%] aspect-square w-[80rem] -translate-x-1/2 rounded-full bg-gradient-to-br from-primary/15 to-accent/15 blur-3xl" />
+        </div>
+        <div className="container flex flex-col items-center gap-8 py-16 sm:py-24">
+          <div className="inline-flex items-center gap-2 rounded-full border bg-background/60 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
+            <ShieldCheck className="h-4 w-4 text-primary" /> ISO 9001-ready quality systems
+          </div>
+          <h1 className="max-w-4xl text-center text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+            Precision Oil Seals for Demanding Applications
+          </h1>
+          <p className="max-w-2xl text-center text-base text-muted-foreground sm:text-lg">
+            Manufacturing and supplying high‑performance oil seals for over 20 years. Engineered to deliver leak‑proof reliability across automotive, industrial, and heavy‑duty machinery.
+          </p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg">
+              <a href="#contact">Request a Quote</a>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <a href="/products">View Products</a>
+            </Button>
+          </div>
+          <div className="grid w-full max-w-4xl grid-cols-2 gap-3 rounded-xl border bg-card p-4 text-center sm:grid-cols-4">
+            {[
+              { value: "20+", label: "Years Experience" },
+              { value: "500+", label: "SKU Library" },
+              { value: "30+", label: "Industries Served" },
+              { value: "99.8%", label: "On‑Time Delivery" },
+            ].map((s) => (
+              <div key={s.label} className="rounded-lg p-3">
+                <div className="text-2xl font-bold text-primary">{s.value}</div>
+                <div className="text-xs text-muted-foreground">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Products */}
+      <section className="container py-16 sm:py-24">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Products & Capabilities</h2>
+          <p className="mt-3 text-muted-foreground">
+            Standard sizes and custom tooling. NBR, FKM, PTFE, and specialty compounds. Small runs to mass production.
+          </p>
+        </div>
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            { icon: Cog, title: "Rotary Shaft Seals", desc: "Low friction, high durability sealing for rotating shafts." },
+            { icon: Droplets, title: "Hydraulic & Pneumatic", desc: "Rod, piston, and static sealing solutions." },
+            { icon: Gauge, title: "High‑Temp / High‑Pressure", desc: "PTFE and FKM seals for harsh environments." },
+            { icon: Wrench, title: "Custom Molded Seals", desc: "Design‑to‑delivery with rapid prototyping." },
+            { icon: Factory, title: "OEM / ODM", desc: "End‑to‑end manufacturing with PPAP documentation." },
+            { icon: ShieldCheck, title: "Quality Assurance", desc: "Material traceability and 100% inspection options." },
+          ].map(({ icon: Icon, title, desc }) => (
+            <Card key={title} className="transition hover:shadow-lg">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-primary/10">
+                    <Icon className="h-5 w-5 text-primary" />
+                  </span>
+                  <div className="text-lg font-semibold">{title}</div>
+                </div>
+                <p className="mt-3 text-sm text-muted-foreground">{desc}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Industries */}
+      <section className="container py-16">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Industries We Serve</h2>
+          <p className="mt-3 text-muted-foreground">
+            Proven performance across applications where reliability matters most.
+          </p>
+        </div>
+        <div className="mx-auto mt-8 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3">
+          {[
+            "Automotive",
+            "Industrial",
+            "Heavy Machinery",
+            "Agriculture",
+            "Marine",
+            "Energy",
+          ].map((i) => (
+            <div key={i} className="rounded-md border bg-card px-4 py-3 text-center text-sm font-medium">
+              {i}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Quality */}
+      <section id="quality" className="container py-16">
+        <div className="grid items-center gap-8 lg:grid-cols-2">
+          <div>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Quality You Can Measure</h2>
+            <p className="mt-3 text-muted-foreground">
+              Our quality system is built for consistency: certified raw materials, controlled processes, and rigorous inspection at each stage.
+            </p>
+            <ul className="mt-6 space-y-3 text-sm">
+              {[
+                "ISO 9001-aligned production controls",
+                "PPAP and material traceability",
+                "Dimensional & visual inspection reports",
+                "Functional testing on request",
+              ].map((f) => (
+                <li key={f} className="flex items-start gap-3">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 text-primary" />
+                  <span className="text-muted-foreground">{f}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <div className="relative overflow-hidden rounded-xl border bg-gradient-to-br from-primary/10 via-accent/10 to-transparent p-8">
+              <div className="grid grid-cols-2 gap-6 text-center">
+                {[
+                  { k: "±0.02mm", v: "Typical Tolerances" },
+                  { k: "AQL 1.0", v: "Inspection Levels" },
+                  { k: "24–72h", v: "Prototype Leadtime" },
+                  { k: "10K+/mo", v: "Scalable Output" },
+                ].map((s) => (
+                  <div key={s.v} className="rounded-lg border bg-background p-6">
+                    <div className="text-xl font-bold text-primary">{s.k}</div>
+                    <div className="mt-1 text-xs text-muted-foreground">{s.v}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section id="contact" className="border-t bg-muted/30 py-16 sm:py-24">
+        <div className="container grid items-start gap-10 lg:grid-cols-2">
+          <div>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Request a Quote</h2>
+            <p className="mt-3 text-muted-foreground">
+              Tell us about your application. We’ll recommend the right sealing solution and pricing.
+            </p>
+            <div className="mt-6 rounded-xl border bg-card p-6">
+              <div className="grid grid-cols-2 gap-4">
+                <Stat label="Material" value="NBR, FKM, PTFE" />
+                <Stat label="Sizes" value="6–500mm" />
+                <Stat label="Tooling" value="In‑house" />
+                <Stat label="MOQ" value="Flexible" />
+              </div>
+            </div>
+          </div>
+          <Card>
+            <CardContent className="p-6">
+              <form onSubmit={submitForm} className="grid gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="name">Name</Label>
+                  <Input id="name" name="name" required placeholder="Your name" />
+                </div>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  <div className="grid gap-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input id="email" name="email" type="email" required placeholder="name@company.com" />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="phone">Phone</Label>
+                    <Input id="phone" name="phone" placeholder="Optional" />
+                  </div>
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="company">Company</Label>
+                  <Input id="company" name="company" placeholder="Company name" />
+                </div>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  <div className="grid gap-2">
+                    <Label htmlFor="product">Product</Label>
+                    <Input id="product" name="product" placeholder="e.g. Rotary Shaft Seal" />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="quantity">Quantity</Label>
+                    <Input id="quantity" name="quantity" type="number" min={1} placeholder="e.g. 1000" />
+                  </div>
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="message">Message</Label>
+                  <Textarea id="message" name="message" required placeholder="Briefly describe your application, dimensions, media, temperature, and pressure." />
+                </div>
+                <Button type="submit" disabled={submitting}>
+                  {submitting ? "Sending..." : "Send Request"}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+    </>
+  );
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-lg border bg-background p-4 text-center">
+      <div className="text-sm text-muted-foreground">{label}</div>
+      <div className="text-lg font-semibold text-primary">{value}</div>
     </div>
   );
 }

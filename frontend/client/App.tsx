@@ -18,6 +18,7 @@ const Products = lazy(() => import("./pages/Products"));
 const Industries = lazy(() => import("./pages/Industries"));
 const Quality = lazy(() => import("./pages/Quality"));
 const Contact = lazy(() => import("./pages/Contact"));
+const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({

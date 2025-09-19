@@ -13,7 +13,7 @@ const ContactSchema = z.object({
   message: z.string().min(10),
 });
 
-export const handleContact: RequestHandler = (req, res) => {
+export const handleContact: RequestHandler = async (req, res) => {
   const parsed = ContactSchema.safeParse(req.body as ContactRequest);
   if (!parsed.success) {
     return res.status(400).json({ ok: false, errors: parsed.error.flatten() });

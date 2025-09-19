@@ -5,16 +5,33 @@ import * as sbStore from "./contacts-supabase";
 
 const useSupabase = !!(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE);
 
-export const addContact = (input: ContactRequest) =>
-  useSupabase ? sbStore.addContact(input) : Promise.resolve(fsStore.addContact(input));
+export const addContact = async (input: ContactRequest) => {
+  if (useSupabase) {
+    try { return await sbStore.addContact(input); } catch (e) { console.error("Supabase addContact failed, falling back to file store", e); }
+  }
+  return fsStore.addContact(input);
+};
 
-export const listContacts = (status?: ContactStatus) =>
-  useSupabase ? sbStore.listContacts(status) : Promise.resolve(fsStore.listContacts(status));
+export const listContacts = async (status?: ContactStatus) => {
+  if (useSupabase) {
+    try { return await sbStore.listContacts(status); } catch (e) { console.error("Supabase listContacts failed, falling back to file store", e); }
+  }
+  return fsStore.listContacts(status);
+};
 
-export const getContact = (id: string) =>
-  useSupabase ? sbStore.getContact(id) : Promise.resolve(fsStore.getContact(id));
+export const getContact = async (id: string) => {
+  if (useSupabase) {
+    try { return await sbStore.getContact(id); } catch (e) { console.error("Supabase getContact failed, falling back to file store", e); }
+  }
+  return fsStore.getContact(id);
+};
 
-export const updateContact = (
+export const updateContact = async (
   id: string,
   patch: Partial<Omit<ContactRecord, "id" | "createdAt">>
-) => (useSupabase ? sbStore.updateContact(id, patch) : Promise.resolve(fsStore.updateContact(id, patch)!));
+) => {
+  if (useSupabase) {
+    try { return await sbStore.updateContact(id, patch); } catch (e) { console.error("Supabase updateContact failed, falling back to file store", e); }
+  }
+  return fsStore.updateContact(id, patch)!;
+};

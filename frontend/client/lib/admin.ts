@@ -33,20 +33,28 @@ function authHeaders(token?: string) {
 
 export async function listContacts(status?: ContactStatus, token?: string) {
   const qs = status ? `?status=${encodeURIComponent(status)}` : "";
-  const res = await fetch(`${API_BASE}/contacts${qs}`, { headers: { ...authHeaders(token) } });
+  const res = await fetch(`${API_BASE}/contacts${qs}`, {
+    headers: { ...authHeaders(token) },
+  });
   if (!res.ok) throw new Error(`Failed to load contacts (${res.status})`);
   const data = await res.json();
   return data.items as ContactRecord[];
 }
 
 export async function getContact(id: string, token?: string) {
-  const res = await fetch(`${API_BASE}/contacts/${id}`, { headers: { ...authHeaders(token) } });
+  const res = await fetch(`${API_BASE}/contacts/${id}`, {
+    headers: { ...authHeaders(token) },
+  });
   if (!res.ok) throw new Error(`Failed to load contact (${res.status})`);
   const data = await res.json();
   return data.item as ContactRecord;
 }
 
-export async function replyContact(id: string, message: string, token?: string) {
+export async function replyContact(
+  id: string,
+  message: string,
+  token?: string,
+) {
   const res = await fetch(`${API_BASE}/contacts/${id}/reply`, {
     method: "POST",
     headers: { "Content-Type": "application/json", ...authHeaders(token) },
@@ -56,7 +64,11 @@ export async function replyContact(id: string, message: string, token?: string) 
   return (await res.json()).item as ContactRecord;
 }
 
-export async function updateContactStatus(id: string, status: ContactStatus, token?: string) {
+export async function updateContactStatus(
+  id: string,
+  status: ContactStatus,
+  token?: string,
+) {
   const res = await fetch(`${API_BASE}/contacts/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json", ...authHeaders(token) },

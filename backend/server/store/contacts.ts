@@ -45,7 +45,7 @@ const FileShape = z.object({
         .object({ message: z.string(), repliedAt: z.string() })
         .optional(),
       notes: z.string().optional(),
-    })
+    }),
   ),
 });
 
@@ -105,12 +105,16 @@ export function getContact(id: string): ContactRecord | undefined {
 
 export function updateContact(
   id: string,
-  patch: Partial<Omit<ContactRecord, "id" | "createdAt">>
+  patch: Partial<Omit<ContactRecord, "id" | "createdAt">>,
 ): ContactRecord | undefined {
   const data = read();
   const idx = data.items.findIndex((i) => i.id === id);
   if (idx === -1) return undefined;
-  const next = { ...data.items[idx], ...patch, updatedAt: new Date().toISOString() } as ContactRecord;
+  const next = {
+    ...data.items[idx],
+    ...patch,
+    updatedAt: new Date().toISOString(),
+  } as ContactRecord;
   data.items[idx] = next;
   write(data);
   return next;

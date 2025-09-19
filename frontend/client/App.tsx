@@ -28,7 +28,11 @@ const queryClient = new QueryClient({
       gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
       retry: (failureCount, error) => {
         // Don't retry on 4xx errors
-        if (error instanceof Error && 'status' in error && typeof error.status === 'number') {
+        if (
+          error instanceof Error &&
+          "status" in error &&
+          typeof error.status === "number"
+        ) {
           if (error.status >= 400 && error.status < 500) {
             return false;
           }
@@ -54,37 +58,37 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route element={<Layout />}>
-                <Route 
-                  path="/" 
+                <Route
+                  path="/"
                   element={
                     <Suspense fallback={<LoadingSpinner />}>
                       <Index />
                     </Suspense>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/products" 
+                <Route
+                  path="/products"
                   element={
                     <Suspense fallback={<LoadingSpinner />}>
                       <Products />
                     </Suspense>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/industries" 
+                <Route
+                  path="/industries"
                   element={
                     <Suspense fallback={<LoadingSpinner />}>
                       <Industries />
                     </Suspense>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/quality" 
+                <Route
+                  path="/quality"
                   element={
                     <Suspense fallback={<LoadingSpinner />}>
                       <Quality />
                     </Suspense>
-                  } 
+                  }
                 />
                 <Route
                   path="/contact"
@@ -104,13 +108,13 @@ const App = () => (
                 />
               </Route>
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route 
-                path="*" 
+              <Route
+                path="*"
                 element={
                   <Suspense fallback={<LoadingSpinner />}>
                     <NotFound />
                   </Suspense>
-                } 
+                }
               />
             </Routes>
           </BrowserRouter>

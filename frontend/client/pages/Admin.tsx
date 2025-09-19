@@ -6,7 +6,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { getToken, setToken, listContacts, ContactRecord, replyContact, updateContactStatus } from "@/lib/admin";
+import {
+  getToken,
+  setToken,
+  listContacts,
+  ContactRecord,
+  replyContact,
+  updateContactStatus,
+} from "@/lib/admin";
 
 function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
   const [token, setTok] = useState("");
@@ -32,7 +39,12 @@ function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
         <form onSubmit={submit} className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="token">Access Token</Label>
-            <Input id="token" value={token} onChange={(e) => setTok(e.target.value)} placeholder="Enter owner token" />
+            <Input
+              id="token"
+              value={token}
+              onChange={(e) => setTok(e.target.value)}
+              placeholder="Enter owner token"
+            />
           </div>
           <Button type="submit">Sign in</Button>
         </form>
@@ -41,20 +53,43 @@ function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
   );
 }
 
-function ContactRow({ item, onSelect }: { item: ContactRecord; onSelect: (id: string) => void }) {
+function ContactRow({
+  item,
+  onSelect,
+}: {
+  item: ContactRecord;
+  onSelect: (id: string) => void;
+}) {
   return (
-    <button onClick={() => onSelect(item.id)} className="w-full text-left rounded-md border p-3 hover:bg-muted/40">
+    <button
+      onClick={() => onSelect(item.id)}
+      className="w-full text-left rounded-md border p-3 hover:bg-muted/40"
+    >
       <div className="flex items-center justify-between">
-        <div className="font-medium">{item.name} • {item.email}</div>
-        <div className="text-xs text-muted-foreground">{new Date(item.createdAt).toLocaleString()}</div>
+        <div className="font-medium">
+          {item.name} • {item.email}
+        </div>
+        <div className="text-xs text-muted-foreground">
+          {new Date(item.createdAt).toLocaleString()}
+        </div>
       </div>
-      <div className="mt-1 text-xs text-muted-foreground truncate">{item.message}</div>
-      <div className="mt-1 text-xs"><span className="rounded bg-muted px-2 py-0.5">{item.status}</span></div>
+      <div className="mt-1 text-xs text-muted-foreground truncate">
+        {item.message}
+      </div>
+      <div className="mt-1 text-xs">
+        <span className="rounded bg-muted px-2 py-0.5">{item.status}</span>
+      </div>
     </button>
   );
 }
 
-function ReplyBox({ current, onDone }: { current: ContactRecord | null; onDone: (c: ContactRecord) => void }) {
+function ReplyBox({
+  current,
+  onDone,
+}: {
+  current: ContactRecord | null;
+  onDone: (c: ContactRecord) => void;
+}) {
   const [msg, setMsg] = useState("");
   const disabled = !current;
   const send = async () => {
@@ -68,11 +103,28 @@ function ReplyBox({ current, onDone }: { current: ContactRecord | null; onDone: 
   return (
     <div className="grid gap-2">
       <Label>Reply</Label>
-      <Textarea value={msg} onChange={(e) => setMsg(e.target.value)} placeholder="Type your reply to the customer..." disabled={disabled} />
+      <Textarea
+        value={msg}
+        onChange={(e) => setMsg(e.target.value)}
+        placeholder="Type your reply to the customer..."
+        disabled={disabled}
+      />
       <div className="flex gap-2">
-        <Button onClick={send} disabled={disabled}>Send Reply</Button>
+        <Button onClick={send} disabled={disabled}>
+          Send Reply
+        </Button>
         {current && (
-          <Button type="button" variant="outline" onClick={async () => { const u = await updateContactStatus(current.id, "closed"); onDone(u); toast.success("Marked closed"); }}>Mark Closed</Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={async () => {
+              const u = await updateContactStatus(current.id, "closed");
+              onDone(u);
+              toast.success("Marked closed");
+            }}
+          >
+            Mark Closed
+          </Button>
         )}
       </div>
     </div>
@@ -84,7 +136,13 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState<ContactRecord[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
-  const active = useMemo(() => (Array.isArray(items) ? items.find(i => i.id === activeId) || null : null), [items, activeId]);
+  const active = useMemo(
+    () =>
+      Array.isArray(items)
+        ? items.find((i) => i.id === activeId) || null
+        : null,
+    [items, activeId],
+  );
 
   useEffect(() => {
     if (!authed) return;
@@ -114,8 +172,14 @@ export default function AdminPage() {
             <CardTitle>Requests & Inquiries</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-2">
-            {loading && <div className="text-sm text-muted-foreground">Loading...</div>}
-            {!loading && items.length === 0 && <div className="text-sm text-muted-foreground">No requests yet.</div>}
+            {loading && (
+              <div className="text-sm text-muted-foreground">Loading...</div>
+            )}
+            {!loading && items.length === 0 && (
+              <div className="text-sm text-muted-foreground">
+                No requests yet.
+              </div>
+            )}
             {items.map((i) => (
               <ContactRow key={i.id} item={i} onSelect={setActiveId} />
             ))}
@@ -129,25 +193,45 @@ export default function AdminPage() {
             <CardTitle>Conversation</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4">
-            {!active && <div className="text-sm text-muted-foreground">Select a request on the left.</div>}
+            {!active && (
+              <div className="text-sm text-muted-foreground">
+                Select a request on the left.
+              </div>
+            )}
             {active && (
               <div className="grid gap-3">
                 <div className="rounded-md border p-3 bg-background">
                   <div className="flex items-center justify-between">
-                    <div className="font-medium">{active.name} • {active.email}</div>
-                    <div className="text-xs text-muted-foreground">{new Date(active.createdAt).toLocaleString()}</div>
+                    <div className="font-medium">
+                      {active.name} • {active.email}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      {new Date(active.createdAt).toLocaleString()}
+                    </div>
                   </div>
-                  <div className="mt-2 text-sm whitespace-pre-wrap">{active.message}</div>
+                  <div className="mt-2 text-sm whitespace-pre-wrap">
+                    {active.message}
+                  </div>
                 </div>
                 {active.reply && (
                   <div className="rounded-md border p-3 bg-muted/30">
-                    <div className="text-xs text-muted-foreground">Replied on {new Date(active.reply.repliedAt).toLocaleString()}</div>
-                    <div className="mt-1 text-sm whitespace-pre-wrap">{active.reply.message}</div>
+                    <div className="text-xs text-muted-foreground">
+                      Replied on{" "}
+                      {new Date(active.reply.repliedAt).toLocaleString()}
+                    </div>
+                    <div className="mt-1 text-sm whitespace-pre-wrap">
+                      {active.reply.message}
+                    </div>
                   </div>
                 )}
-                <ReplyBox current={active} onDone={(u) => {
-                  setItems((prev) => prev.map((it) => (it.id === u.id ? u : it)));
-                }} />
+                <ReplyBox
+                  current={active}
+                  onDone={(u) => {
+                    setItems((prev) =>
+                      prev.map((it) => (it.id === u.id ? u : it)),
+                    );
+                  }}
+                />
               </div>
             )}
           </CardContent>

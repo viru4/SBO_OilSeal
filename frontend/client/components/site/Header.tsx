@@ -33,8 +33,14 @@ export default function Header() {
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           {/* Replace Logo with favicon1.png */}
-          <img src="/favicon1.jpg" alt="SBO Oil Seals Logo" className="h-8 w-8" />
-          <span className="text-lg font-bold tracking-tight">SBO Oil Seals</span>
+          <img
+            src="/favicon1.jpg"
+            alt="SBO Oil Seals Logo"
+            className="h-8 w-8"
+          />
+          <span className="text-lg font-bold tracking-tight">
+            SBO Oil Seals
+          </span>
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
           {nav.map((n) => (

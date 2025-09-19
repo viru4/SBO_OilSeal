@@ -37,12 +37,17 @@ function map(row: RowT): ContactRecord {
     product: row.product ?? undefined,
     quantity: (row.quantity as any) ?? undefined,
     message: row.message,
-    reply: row.reply_message && row.reply_at ? { message: row.reply_message, repliedAt: row.reply_at } : undefined,
+    reply:
+      row.reply_message && row.reply_at
+        ? { message: row.reply_message, repliedAt: row.reply_at }
+        : undefined,
     notes: row.notes ?? undefined,
   };
 }
 
-export async function addContact(input: ContactRequest): Promise<ContactRecord> {
+export async function addContact(
+  input: ContactRequest,
+): Promise<ContactRecord> {
   const db = getSupabaseAdmin();
   if (!db) throw new Error("Supabase not configured");
   const now = new Date().toISOString();
@@ -63,7 +68,9 @@ export async function addContact(input: ContactRequest): Promise<ContactRecord> 
   return map(Row.parse(data));
 }
 
-export async function listContacts(status?: ContactStatus): Promise<ContactRecord[]> {
+export async function listContacts(
+  status?: ContactStatus,
+): Promise<ContactRecord[]> {
   const db = getSupabaseAdmin();
   if (!db) throw new Error("Supabase not configured");
   let q = db.from(Table).select().order("created_at", { ascending: false });
@@ -73,7 +80,9 @@ export async function listContacts(status?: ContactStatus): Promise<ContactRecor
   return (data as any[]).map((r) => map(Row.parse(r)));
 }
 
-export async function getContact(id: string): Promise<ContactRecord | undefined> {
+export async function getContact(
+  id: string,
+): Promise<ContactRecord | undefined> {
   const db = getSupabaseAdmin();
   if (!db) throw new Error("Supabase not configured");
   const { data, error } = await db.from(Table).select().eq("id", id).single();
@@ -83,7 +92,7 @@ export async function getContact(id: string): Promise<ContactRecord | undefined>
 
 export async function updateContact(
   id: string,
-  patch: Partial<Omit<ContactRecord, "id" | "createdAt">>
+  patch: Partial<Omit<ContactRecord, "id" | "createdAt">>,
 ): Promise<ContactRecord | undefined> {
   const db = getSupabaseAdmin();
   if (!db) throw new Error("Supabase not configured");
@@ -94,7 +103,12 @@ export async function updateContact(
     update.reply_at = patch.reply.repliedAt;
   }
   if (patch.notes !== undefined) update.notes = patch.notes;
-  const { data, error } = await db.from(Table).update(update).eq("id", id).select().single();
+  const { data, error } = await db
+    .from(Table)
+    .update(update)
+    .eq("id", id)
+    .select()
+    .single();
   if (error) throw error;
   return data ? map(Row.parse(data)) : undefined;
 }

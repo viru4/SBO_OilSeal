@@ -34,7 +34,7 @@ export const handleContact: RequestHandler = (req, res) => {
   } catch {}
 
   try {
-    addContact(payload);
+    await addContact(payload);
   } catch {}
 
   const response: ContactResponse = { ok: true };

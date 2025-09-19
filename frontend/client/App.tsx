@@ -86,13 +86,21 @@ const App = () => (
                     </Suspense>
                   } 
                 />
-                <Route 
-                  path="/contact" 
+                <Route
+                  path="/contact"
                   element={
                     <Suspense fallback={<LoadingSpinner />}>
                       <Contact />
                     </Suspense>
-                  } 
+                  }
+                />
+                <Route
+                  path="/admin"
+                  element={
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <Admin />
+                    </Suspense>
+                  }
                 />
               </Route>
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

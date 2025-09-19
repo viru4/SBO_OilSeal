@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { z } from "zod";
 import type { ContactRequest, ContactResponse } from "@shared/api";
-import { addContact } from "../store/contacts";
+import { addContact } from "../store";
 
 const ContactSchema = z.object({
   name: z.string().min(2),

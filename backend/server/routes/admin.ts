@@ -21,36 +21,56 @@ export function createAdminRouter() {
   const r = Router();
   r.use(requireOwner);
 
-  r.get("/contacts", (req, res) => {
-    const status = typeof req.query.status === "string" ? (req.query.status as any) : undefined;
-    const items = listContacts(status);
-    res.json({ items });
+  r.get("/contacts", async (req, res) => {
+    try {
+      const status = typeof req.query.status === "string" ? (req.query.status as any) : undefined;
+      const items = await listContacts(status);
+      res.json({ items });
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ error: "Failed to load contacts" });
+    }
   });
 
-  r.get("/contacts/:id", (req, res) => {
-    const item = getContact(req.params.id);
-    if (!item) return res.status(404).json({ error: "Not found" });
-    res.json({ item });
+  r.get("/contacts/:id", async (req, res) => {
+    try {
+      const item = await getContact(req.params.id);
+      if (!item) return res.status(404).json({ error: "Not found" });
+      res.json({ item });
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ error: "Failed to load contact" });
+    }
   });
 
-  r.post("/contacts/:id/reply", (req, res) => {
-    const parsed = ReplySchema.safeParse(req.body);
-    if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
-    const item = getContact(req.params.id);
-    if (!item) return res.status(404).json({ error: "Not found" });
-    const updated = updateContact(req.params.id, {
-      status: "replied",
-      reply: { message: parsed.data.message, repliedAt: new Date().toISOString() },
-    });
-    res.json({ ok: true, item: updated });
+  r.post("/contacts/:id/reply", async (req, res) => {
+    try {
+      const parsed = ReplySchema.safeParse(req.body);
+      if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+      const item = await getContact(req.params.id);
+      if (!item) return res.status(404).json({ error: "Not found" });
+      const updated = await updateContact(req.params.id, {
+        status: "replied",
+        reply: { message: parsed.data.message, repliedAt: new Date().toISOString() },
+      });
+      res.json({ ok: true, item: updated });
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ error: "Failed to send reply" });
+    }
   });
 
-  r.patch("/contacts/:id", (req, res) => {
-    const parsed = StatusSchema.safeParse({ status: req.body?.status });
-    if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
-    const updated = updateContact(req.params.id, { status: parsed.data.status });
-    if (!updated) return res.status(404).json({ error: "Not found" });
-    res.json({ ok: true, item: updated });
+  r.patch("/contacts/:id", async (req, res) => {
+    try {
+      const parsed = StatusSchema.safeParse({ status: req.body?.status });
+      if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
+      const updated = await updateContact(req.params.id, { status: parsed.data.status });
+      if (!updated) return res.status(404).json({ error: "Not found" });
+      res.json({ ok: true, item: updated });
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ error: "Failed to update status" });
+    }
   });
 
   return r;

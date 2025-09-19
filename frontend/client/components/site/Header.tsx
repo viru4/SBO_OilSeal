@@ -1,8 +1,9 @@
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 // import Logo from "./Logo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { getToken } from "@/lib/admin";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -14,6 +15,19 @@ const nav = [
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [isOwner, setIsOwner] = useState<boolean>(() => !!getToken());
+
+  useEffect(() => {
+    const update = () => setIsOwner(!!getToken());
+    update();
+    window.addEventListener("storage", update);
+    window.addEventListener("focus", update);
+    return () => {
+      window.removeEventListener("storage", update);
+      window.removeEventListener("focus", update);
+    };
+  }, []);
+
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
@@ -37,6 +51,11 @@ export default function Header() {
           <Button asChild className="ml-2">
             <Link to="/contact">Request Quote</Link>
           </Button>
+          {isOwner && (
+            <Button asChild variant="outline">
+              <Link to="/admin">Admin</Link>
+            </Button>
+          )}
         </nav>
         <button
           className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md border hover:bg-accent"
@@ -66,6 +85,13 @@ export default function Header() {
                 Request Quote
               </Link>
             </Button>
+            {isOwner && (
+              <Button asChild variant="outline" className="mt-2">
+                <Link to="/admin" onClick={() => setOpen(false)}>
+                  Admin
+                </Link>
+              </Button>
+            )}
           </div>
         </div>
       )}

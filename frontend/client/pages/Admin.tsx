@@ -92,7 +92,7 @@ export default function AdminPage() {
       try {
         setLoading(true);
         const data = await listContacts();
-        setItems(data);
+        setItems(Array.isArray(data) ? data : []);
         if (data.length) setActiveId(data[0].id);
       } catch (e) {
         console.error(e);

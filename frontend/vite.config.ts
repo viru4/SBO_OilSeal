@@ -9,10 +9,9 @@ export default defineConfig({
     port: 3000,
     fs: {
       allow: [
-        "C:/Users/Lenovo/OneDrive/Desktop/SBO_OILSEAL/frontend",
-        "C:/Users/Lenovo/OneDrive/Desktop/SBO_OILSEAL/frontend/client",
-        "C:/Users/Lenovo/OneDrive/Desktop/SBO_OILSEAL/frontend/shared"
-
+        path.resolve(__dirname),
+        path.resolve(__dirname, "client"),
+        path.resolve(__dirname, "shared"),
       ],
       deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**"],
     },

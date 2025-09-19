@@ -18,6 +18,7 @@ const Products = lazy(() => import("./pages/Products"));
 const Industries = lazy(() => import("./pages/Industries"));
 const Quality = lazy(() => import("./pages/Quality"));
 const Contact = lazy(() => import("./pages/Contact"));
+const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
@@ -27,7 +28,11 @@ const queryClient = new QueryClient({
       gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
       retry: (failureCount, error) => {
         // Don't retry on 4xx errors
-        if (error instanceof Error && 'status' in error && typeof error.status === 'number') {
+        if (
+          error instanceof Error &&
+          "status" in error &&
+          typeof error.status === "number"
+        ) {
           if (error.status >= 400 && error.status < 500) {
             return false;
           }
@@ -53,55 +58,63 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route element={<Layout />}>
-                <Route 
-                  path="/" 
+                <Route
+                  path="/"
                   element={
                     <Suspense fallback={<LoadingSpinner />}>
                       <Index />
                     </Suspense>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/products" 
+                <Route
+                  path="/products"
                   element={
                     <Suspense fallback={<LoadingSpinner />}>
                       <Products />
                     </Suspense>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/industries" 
+                <Route
+                  path="/industries"
                   element={
                     <Suspense fallback={<LoadingSpinner />}>
                       <Industries />
                     </Suspense>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/quality" 
+                <Route
+                  path="/quality"
                   element={
                     <Suspense fallback={<LoadingSpinner />}>
                       <Quality />
                     </Suspense>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/contact" 
+                <Route
+                  path="/contact"
                   element={
                     <Suspense fallback={<LoadingSpinner />}>
                       <Contact />
                     </Suspense>
-                  } 
+                  }
+                />
+                <Route
+                  path="/admin"
+                  element={
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <Admin />
+                    </Suspense>
+                  }
                 />
               </Route>
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route 
-                path="*" 
+              <Route
+                path="*"
                 element={
                   <Suspense fallback={<LoadingSpinner />}>
                     <NotFound />
                   </Suspense>
-                } 
+                }
               />
             </Routes>
           </BrowserRouter>

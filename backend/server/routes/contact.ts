@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import { z } from "zod";
 import type { ContactRequest, ContactResponse } from "@shared/api";
+import { addContact } from "../store";
 
 const ContactSchema = z.object({
   name: z.string().min(2),
@@ -12,7 +13,7 @@ const ContactSchema = z.object({
   message: z.string().min(10),
 });
 
-export const handleContact: RequestHandler = (req, res) => {
+export const handleContact: RequestHandler = async (req, res) => {
   const parsed = ContactSchema.safeParse(req.body as ContactRequest);
   if (!parsed.success) {
     return res.status(400).json({ ok: false, errors: parsed.error.flatten() });
@@ -30,6 +31,10 @@ export const handleContact: RequestHandler = (req, res) => {
       quantity: payload.quantity,
       message: payload.message?.slice(0, 500),
     });
+  } catch {}
+
+  try {
+    await addContact(payload);
   } catch {}
 
   const response: ContactResponse = { ok: true };

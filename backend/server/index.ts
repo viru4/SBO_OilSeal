@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { handleContact } from "./routes/contact";
+import { createAdminRouter } from "./routes/admin";
 
 export function createServer() {
   const app = express();
@@ -20,6 +21,8 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
   app.post("/api/contact", handleContact);
+
+  app.use("/api/admin", createAdminRouter());
 
   return app;
 }

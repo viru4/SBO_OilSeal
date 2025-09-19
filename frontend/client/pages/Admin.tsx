@@ -84,7 +84,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState<ContactRecord[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
-  const active = useMemo(() => items.find(i => i.id === activeId) || null, [items, activeId]);
+  const active = useMemo(() => (Array.isArray(items) ? items.find(i => i.id === activeId) || null : null), [items, activeId]);
 
   useEffect(() => {
     if (!authed) return;

@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import Logo from "./Logo";
+// import Logo from "./Logo";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
@@ -18,8 +18,9 @@ export default function Header() {
     <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <Logo className="h-8 w-8" />
-          <span className="text-lg font-bold tracking-tight">SBO OilSeals</span>
+          {/* Replace Logo with favicon1.png */}
+          <img src="/favicon1.jpg" alt="SBO Oil Seals Logo" className="h-8 w-8" />
+          <span className="text-lg font-bold tracking-tight">SBO Oil Seals</span>
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
           {nav.map((n) => (

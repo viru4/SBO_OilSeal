@@ -1,6 +1,6 @@
 import { RequestHandler, Router } from "express";
 import { z } from "zod";
-import { getContact, listContacts, updateContact } from "../store/contacts";
+import { getContact, listContacts, updateContact } from "../store";
 
 function verifyToken(req: Parameters<RequestHandler>[0]) {
   const auth = req.headers["authorization"] || "";

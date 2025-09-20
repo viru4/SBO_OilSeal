@@ -224,6 +224,49 @@ export default function AdminPage() {
                     </div>
                   </div>
                 )}
+                <div className="rounded-md border p-3 bg-background">
+                  <div className="text-sm font-medium">Customer details</div>
+                  <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+                    <div>
+                      <span className="text-muted-foreground">Status:</span>{" "}
+                      <span className="uppercase">{active.status}</span>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground">Updated:</span>{" "}
+                      {new Date(active.updatedAt).toLocaleString()}
+                    </div>
+                    {active.phone && (
+                      <div>
+                        <span className="text-muted-foreground">Phone:</span>{" "}
+                        <span className="break-all">{active.phone}</span>
+                      </div>
+                    )}
+                    {active.company && (
+                      <div>
+                        <span className="text-muted-foreground">Company:</span>{" "}
+                        <span className="break-all">{active.company}</span>
+                      </div>
+                    )}
+                    {active.product && (
+                      <div>
+                        <span className="text-muted-foreground">Product:</span>{" "}
+                        <span className="break-all">{active.product}</span>
+                      </div>
+                    )}
+                    {active.quantity !== undefined && active.quantity !== null && (
+                      <div>
+                        <span className="text-muted-foreground">Quantity:</span>{" "}
+                        <span className="break-all">{String(active.quantity)}</span>
+                      </div>
+                    )}
+                  </div>
+                  {active.notes && (
+                    <div className="mt-3">
+                      <div className="text-sm text-muted-foreground">Notes</div>
+                      <div className="mt-1 text-sm whitespace-pre-wrap">{active.notes}</div>
+                    </div>
+                  )}
+                </div>
                 <ReplyBox
                   current={active}
                   onDone={(u) => {

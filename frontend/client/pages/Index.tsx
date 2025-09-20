@@ -17,19 +17,23 @@ export default function Index() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10">
+      <section className="relative overflow-hidden min-h-screen hero-background">
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/40 z-0" />
+        
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 z-0">
           <div className="absolute left-1/2 top-[-10%] aspect-square w-[80rem] -translate-x-1/2 rounded-full bg-gradient-to-br from-primary/15 to-accent/15 blur-3xl" />
         </div>
-        <div className="container flex flex-col items-center gap-8 py-16 sm:py-24">
-          <div className="inline-flex items-center gap-2 rounded-full border bg-background/60 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
+        <div className="container flex flex-col items-center gap-8 py-16 sm:py-24 relative z-10">
+          <div className="inline-flex items-center gap-2 rounded-full border bg-white/80 px-3 py-1 text-xs text-gray-700 backdrop-blur shadow-lg">
             <ShieldCheck className="h-4 w-4 text-primary" /> Automotive sealing
             specialists — 20+ years
           </div>
-          <h1 className="max-w-4xl text-center text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+          <h1 className="max-w-4xl text-center text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-white drop-shadow-lg">
             Automotive Oil Seals — Specialized in Motorcycle Shocker/Fork Seals
           </h1>
-          <p className="max-w-2xl text-center text-base text-muted-foreground sm:text-lg">
+          <p className="max-w-2xl text-center text-base text-gray-100 sm:text-lg drop-shadow-md">
             SBO OilSeals manufactures high‑performance oil seals exclusively for
             automobiles, with a specialty in motorcycle shocker/fork seals.
             Built for leak‑proof performance and long service life.
@@ -42,7 +46,7 @@ export default function Index() {
               <a href="/products">View Products</a>
             </Button>
           </div>
-          <div className="grid w-full max-w-4xl grid-cols-2 gap-3 rounded-xl border bg-card p-4 text-center sm:grid-cols-4">
+          <div className="grid w-full max-w-4xl grid-cols-2 gap-3 rounded-xl border bg-white/90 backdrop-blur p-4 text-center sm:grid-cols-4 shadow-xl">
             {[
               { value: "20+", label: "Years Experience" },
               { value: "500+", label: "SKU Library" },
@@ -51,7 +55,7 @@ export default function Index() {
             ].map((s) => (
               <div key={s.label} className="rounded-lg p-3">
                 <div className="text-2xl font-bold text-primary">{s.value}</div>
-                <div className="text-xs text-muted-foreground">{s.label}</div>
+                <div className="text-xs text-gray-600">{s.label}</div>
               </div>
             ))}
           </div>

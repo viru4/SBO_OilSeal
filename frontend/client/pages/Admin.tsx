@@ -100,6 +100,22 @@ function ReplyBox({
     onDone(updated);
     toast.success("Reply saved");
   };
+  const notify = async (channel: "email" | "sms" | "whatsapp") => {
+    if (!current) return;
+    if (!msg.trim()) return toast.error("Type a reply message");
+    try {
+      await notifyContact(current.id, channel, msg.trim());
+      toast.success(
+        channel === "email"
+          ? "Email sent"
+          : channel === "sms"
+            ? "SMS sent"
+            : "WhatsApp sent",
+      );
+    } catch (e: any) {
+      toast.error(e?.message || "Failed to send");
+    }
+  };
   return (
     <div className="grid gap-2">
       <Label>Reply</Label>

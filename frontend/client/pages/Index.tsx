@@ -20,7 +20,7 @@ export default function Index() {
       <section className="relative overflow-hidden min-h-screen hero-background">
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-black/40 z-0" />
-        
+
         {/* Gradient overlay */}
         <div className="absolute inset-0 z-0">
           <div className="absolute left-1/2 top-[-10%] aspect-square w-[80rem] -translate-x-1/2 rounded-full bg-gradient-to-br from-primary/15 to-accent/15 blur-3xl" />

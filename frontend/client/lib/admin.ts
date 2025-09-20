@@ -26,9 +26,11 @@ export function setToken(token: string) {
   localStorage.setItem("admin_token", token);
 }
 
-function authHeaders(token?: string) {
+function authHeaders(token?: string): Record<string, string> {
   const t = token ?? getToken();
-  return t ? { Authorization: `Bearer ${t}` } : {};
+  const headers: Record<string, string> = {};
+  if (t) headers["Authorization"] = `Bearer ${t}`;
+  return headers;
 }
 
 export async function listContacts(status?: ContactStatus, token?: string) {

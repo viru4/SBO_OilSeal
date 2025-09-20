@@ -126,9 +126,18 @@ function ReplyBox({
         placeholder="Type your reply to the customer..."
         disabled={disabled}
       />
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <Button onClick={send} disabled={disabled}>
           Send Reply
+        </Button>
+        <Button type="button" variant="outline" disabled={disabled} onClick={() => notify("email")}>
+          Email
+        </Button>
+        <Button type="button" variant="outline" disabled={disabled || !current?.phone} onClick={() => notify("sms")}>
+          SMS
+        </Button>
+        <Button type="button" variant="outline" disabled={disabled || !current?.phone} onClick={() => notify("whatsapp")}>
+          WhatsApp
         </Button>
         {current && (
           <Button

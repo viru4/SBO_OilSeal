@@ -1,5 +1,5 @@
 import ProductCard from "@/components/site/ProductCard";
-import { FEATURED_PRODUCTS } from "@/data/products";
+import { ALL_PRODUCTS } from "@/data/products";
 import { Button } from "@/components/ui/button";
 
 export default function Products() {
@@ -17,7 +17,7 @@ export default function Products() {
       </div>
 
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {FEATURED_PRODUCTS.map((p) => (
+        {ALL_PRODUCTS.map((p) => (
           <ProductCard key={p.sku} item={p} />
         ))}
       </div>

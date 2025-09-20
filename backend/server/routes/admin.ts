@@ -19,6 +19,9 @@ const StatusSchema = z.object({
   status: z.enum(["new", "in_progress", "closed", "replied"]),
 });
 
+const NotifySchema = z.object({ channel: z.enum(["email", "sms", "whatsapp"]), message: z.string().min(1) });
+import { sendEmail, sendSMS, sendWhatsApp } from "../services/notify";
+
 export function createAdminRouter() {
   const r = Router();
   r.use(requireOwner);

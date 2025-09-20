@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import {
   getToken,
@@ -13,6 +12,7 @@ import {
   ContactRecord,
   replyContact,
   updateContactStatus,
+  notifyContact,
 } from "@/lib/admin";
 
 function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
@@ -100,6 +100,22 @@ function ReplyBox({
     onDone(updated);
     toast.success("Reply saved");
   };
+  const notify = async (channel: "email" | "sms" | "whatsapp") => {
+    if (!current) return;
+    if (!msg.trim()) return toast.error("Type a reply message");
+    try {
+      await notifyContact(current.id, channel, msg.trim());
+      toast.success(
+        channel === "email"
+          ? "Email sent"
+          : channel === "sms"
+            ? "SMS sent"
+            : "WhatsApp sent",
+      );
+    } catch (e: any) {
+      toast.error(e?.message || "Failed to send");
+    }
+  };
   return (
     <div className="grid gap-2">
       <Label>Reply</Label>
@@ -109,9 +125,33 @@ function ReplyBox({
         placeholder="Type your reply to the customer..."
         disabled={disabled}
       />
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <Button onClick={send} disabled={disabled}>
           Send Reply
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          disabled={disabled}
+          onClick={() => notify("email")}
+        >
+          Email
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          disabled={disabled || !current?.phone}
+          onClick={() => notify("sms")}
+        >
+          SMS
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          disabled={disabled || !current?.phone}
+          onClick={() => notify("whatsapp")}
+        >
+          WhatsApp
         </Button>
         {current && (
           <Button
@@ -224,6 +264,56 @@ export default function AdminPage() {
                     </div>
                   </div>
                 )}
+                <div className="rounded-md border p-3 bg-background">
+                  <div className="text-sm font-medium">Customer details</div>
+                  <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+                    <div>
+                      <span className="text-muted-foreground">Status:</span>{" "}
+                      <span className="uppercase">{active.status}</span>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground">Updated:</span>{" "}
+                      {new Date(active.updatedAt).toLocaleString()}
+                    </div>
+                    {active.phone && (
+                      <div>
+                        <span className="text-muted-foreground">Phone:</span>{" "}
+                        <span className="break-all">{active.phone}</span>
+                      </div>
+                    )}
+                    {active.company && (
+                      <div>
+                        <span className="text-muted-foreground">Company:</span>{" "}
+                        <span className="break-all">{active.company}</span>
+                      </div>
+                    )}
+                    {active.product && (
+                      <div>
+                        <span className="text-muted-foreground">Product:</span>{" "}
+                        <span className="break-all">{active.product}</span>
+                      </div>
+                    )}
+                    {active.quantity !== undefined &&
+                      active.quantity !== null && (
+                        <div>
+                          <span className="text-muted-foreground">
+                            Quantity:
+                          </span>{" "}
+                          <span className="break-all">
+                            {String(active.quantity)}
+                          </span>
+                        </div>
+                      )}
+                  </div>
+                  {active.notes && (
+                    <div className="mt-3">
+                      <div className="text-sm text-muted-foreground">Notes</div>
+                      <div className="mt-1 text-sm whitespace-pre-wrap">
+                        {active.notes}
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <ReplyBox
                   current={active}
                   onDone={(u) => {

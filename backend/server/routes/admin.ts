@@ -19,6 +19,12 @@ const StatusSchema = z.object({
   status: z.enum(["new", "in_progress", "closed", "replied"]),
 });
 
+const NotifySchema = z.object({
+  channel: z.enum(["email", "sms", "whatsapp"]),
+  message: z.string().min(1),
+});
+import { sendEmail, sendSMS, sendWhatsApp } from "../services/notify";
+
 export function createAdminRouter() {
   const r = Router();
   r.use(requireOwner);
@@ -82,6 +88,35 @@ export function createAdminRouter() {
     } catch (e) {
       console.error(e);
       res.status(500).json({ error: "Failed to update status" });
+    }
+  });
+
+  r.post("/contacts/:id/notify", async (req, res) => {
+    try {
+      const parsed = NotifySchema.safeParse(req.body);
+      if (!parsed.success)
+        return res.status(400).json({ error: parsed.error.flatten() });
+      const item = await getContact(req.params.id);
+      if (!item) return res.status(404).json({ error: "Not found" });
+      const message = parsed.data.message;
+      const channel = parsed.data.channel;
+      if (channel === "email") {
+        if (!item.email)
+          return res.status(400).json({ error: "Contact has no email" });
+        await sendEmail(item.email, "Reply from SBO Oil Seals", message);
+      } else if (channel === "sms") {
+        if (!item.phone)
+          return res.status(400).json({ error: "Contact has no phone" });
+        await sendSMS(item.phone, message);
+      } else if (channel === "whatsapp") {
+        if (!item.phone)
+          return res.status(400).json({ error: "Contact has no phone" });
+        await sendWhatsApp(item.phone, message);
+      }
+      res.json({ ok: true });
+    } catch (e: any) {
+      console.error(e);
+      res.status(500).json({ error: e?.message || "Failed to notify" });
     }
   });
 

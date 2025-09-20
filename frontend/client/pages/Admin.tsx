@@ -129,13 +129,28 @@ function ReplyBox({
         <Button onClick={send} disabled={disabled}>
           Send Reply
         </Button>
-        <Button type="button" variant="outline" disabled={disabled} onClick={() => notify("email")}>
+        <Button
+          type="button"
+          variant="outline"
+          disabled={disabled}
+          onClick={() => notify("email")}
+        >
           Email
         </Button>
-        <Button type="button" variant="outline" disabled={disabled || !current?.phone} onClick={() => notify("sms")}>
+        <Button
+          type="button"
+          variant="outline"
+          disabled={disabled || !current?.phone}
+          onClick={() => notify("sms")}
+        >
           SMS
         </Button>
-        <Button type="button" variant="outline" disabled={disabled || !current?.phone} onClick={() => notify("whatsapp")}>
+        <Button
+          type="button"
+          variant="outline"
+          disabled={disabled || !current?.phone}
+          onClick={() => notify("whatsapp")}
+        >
           WhatsApp
         </Button>
         {current && (
@@ -278,17 +293,24 @@ export default function AdminPage() {
                         <span className="break-all">{active.product}</span>
                       </div>
                     )}
-                    {active.quantity !== undefined && active.quantity !== null && (
-                      <div>
-                        <span className="text-muted-foreground">Quantity:</span>{" "}
-                        <span className="break-all">{String(active.quantity)}</span>
-                      </div>
-                    )}
+                    {active.quantity !== undefined &&
+                      active.quantity !== null && (
+                        <div>
+                          <span className="text-muted-foreground">
+                            Quantity:
+                          </span>{" "}
+                          <span className="break-all">
+                            {String(active.quantity)}
+                          </span>
+                        </div>
+                      )}
                   </div>
                   {active.notes && (
                     <div className="mt-3">
                       <div className="text-sm text-muted-foreground">Notes</div>
-                      <div className="mt-1 text-sm whitespace-pre-wrap">{active.notes}</div>
+                      <div className="mt-1 text-sm whitespace-pre-wrap">
+                        {active.notes}
+                      </div>
                     </div>
                   )}
                 </div>

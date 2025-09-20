@@ -19,7 +19,10 @@ const StatusSchema = z.object({
   status: z.enum(["new", "in_progress", "closed", "replied"]),
 });
 
-const NotifySchema = z.object({ channel: z.enum(["email", "sms", "whatsapp"]), message: z.string().min(1) });
+const NotifySchema = z.object({
+  channel: z.enum(["email", "sms", "whatsapp"]),
+  message: z.string().min(1),
+});
 import { sendEmail, sendSMS, sendWhatsApp } from "../services/notify";
 
 export function createAdminRouter() {
@@ -98,13 +101,16 @@ export function createAdminRouter() {
       const message = parsed.data.message;
       const channel = parsed.data.channel;
       if (channel === "email") {
-        if (!item.email) return res.status(400).json({ error: "Contact has no email" });
+        if (!item.email)
+          return res.status(400).json({ error: "Contact has no email" });
         await sendEmail(item.email, "Reply from SBO Oil Seals", message);
       } else if (channel === "sms") {
-        if (!item.phone) return res.status(400).json({ error: "Contact has no phone" });
+        if (!item.phone)
+          return res.status(400).json({ error: "Contact has no phone" });
         await sendSMS(item.phone, message);
       } else if (channel === "whatsapp") {
-        if (!item.phone) return res.status(400).json({ error: "Contact has no phone" });
+        if (!item.phone)
+          return res.status(400).json({ error: "Contact has no phone" });
         await sendWhatsApp(item.phone, message);
       }
       res.json({ ok: true });

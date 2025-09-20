@@ -79,3 +79,24 @@ export async function updateContactStatus(
   if (!res.ok) throw new Error(`Failed to update status (${res.status})`);
   return (await res.json()).item as ContactRecord;
 }
+
+export type NotifyChannel = "email" | "sms" | "whatsapp";
+export async function notifyContact(
+  id: string,
+  channel: NotifyChannel,
+  message: string,
+  token?: string,
+) {
+  const res = await fetch(`${API_BASE}/contacts/${id}/notify`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...authHeaders(token) },
+    body: JSON.stringify({ channel, message }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(
+      err?.error ? String(err.error) : `Failed to notify (${res.status})`,
+    );
+  }
+  return (await res.json()) as { ok: boolean };
+}

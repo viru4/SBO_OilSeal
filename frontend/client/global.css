@@ -11,6 +11,21 @@
    * tailwind.config.ts expects the following color variables to be expressed as HSL values.
    * A different format will require also updating the theme in tailwind.config.ts.
   */
+  
+  /* Background image optimization */
+  .hero-background {
+    background-image: url('/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+  
+  @media (max-width: 768px) {
+    .hero-background {
+      background-attachment: scroll;
+    }
+  }
   :root {
     --background: 0 0% 100%;
     --foreground: 222 47% 11%;

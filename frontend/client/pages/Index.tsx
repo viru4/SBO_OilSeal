@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import ProductCard from "@/components/site/ProductCard";
-import { FEATURED_PRODUCTS } from "@/data/products";
+import { HOME_FEATURED_PRODUCTS } from "@/data/products";
 import ContactForm from "@/components/site/ContactForm";
 import {
   CheckCircle2,
@@ -139,7 +139,7 @@ export default function Index() {
           </div>
 
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {FEATURED_PRODUCTS.map((p) => (
+            {HOME_FEATURED_PRODUCTS.map((p) => (
               <ProductCard key={p.sku} item={p} />
             ))}
           </div>
@@ -242,7 +242,7 @@ export default function Index() {
               <div className="grid grid-cols-2 gap-4">
                 <Stat label="Materials" value="NBR, FKM, PTFE" />
                 <Stat label="Fork Sizes" value="26–50mm" />
-                <Stat label="Tooling" value="In‑house" />
+                <Stat label="Tooling" value="In��house" />
                 <Stat label="MOQ" value="Flexible" />
               </div>
             </div>

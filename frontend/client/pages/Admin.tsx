@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -176,6 +176,10 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState<ContactRecord[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
+  
   const active = useMemo(
     () =>
       Array.isArray(items)
@@ -184,23 +188,37 @@ export default function AdminPage() {
     [items, activeId],
   );
 
+  const loadContacts = useCallback(async (page = 0, append = false) => {
+    try {
+      setLoading(true);
+      const limit = 20; // Load 20 contacts at a time
+      const offset = page * limit;
+      
+      const result = await listContacts(undefined, undefined, limit, offset);
+      const newItems = result.items || [];
+      
+      if (append) {
+        setItems(prev => [...prev, ...newItems]);
+      } else {
+        setItems(newItems);
+        if (newItems.length > 0) setActiveId(newItems[0].id);
+      }
+      
+      setHasMore(result.pagination?.hasMore || false);
+      setTotalCount(prev => append ? prev + newItems.length : newItems.length);
+    } catch (e) {
+      console.error(e);
+      toast.error("Failed to load contacts (check token)");
+      setAuthed(false);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (!authed) return;
-    (async () => {
-      try {
-        setLoading(true);
-        const data = await listContacts();
-        setItems(Array.isArray(data) ? data : []);
-        if (data.length) setActiveId(data[0].id);
-      } catch (e) {
-        console.error(e);
-        toast.error("Failed to load contacts (check token)");
-        setAuthed(false);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [authed]);
+    loadContacts(0, false);
+  }, [authed, loadContacts]);
 
   if (!authed) return <AdminLogin onSuccess={() => setAuthed(true)} />;
 
@@ -212,7 +230,7 @@ export default function AdminPage() {
             <CardTitle>Requests & Inquiries</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-2">
-            {loading && (
+            {loading && !items.length && (
               <div className="text-sm text-muted-foreground">Loading...</div>
             )}
             {!loading && items.length === 0 && (
@@ -223,6 +241,25 @@ export default function AdminPage() {
             {items.map((i) => (
               <ContactRow key={i.id} item={i} onSelect={setActiveId} />
             ))}
+            {hasMore && (
+              <Button 
+                variant="outline" 
+                onClick={() => {
+                  const nextPage = currentPage + 1;
+                  setCurrentPage(nextPage);
+                  loadContacts(nextPage, true);
+                }}
+                disabled={loading}
+                className="mt-2"
+              >
+                {loading ? "Loading..." : "Load More"}
+              </Button>
+            )}
+            {totalCount > 0 && (
+              <div className="text-xs text-muted-foreground text-center mt-2">
+                Showing {totalCount} contacts
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

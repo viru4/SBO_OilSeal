@@ -21,10 +21,14 @@ export const addContact = async (input: ContactRequest) => {
   return fsStore.addContact(input);
 };
 
-export const listContacts = async (status?: ContactStatus) => {
+export const listContacts = async (
+  status?: ContactStatus, 
+  limit?: number, 
+  offset?: number
+) => {
   if (useSupabase) {
     try {
-      return await sbStore.listContacts(status);
+      return await sbStore.listContacts(status, limit, offset);
     } catch (e) {
       console.error(
         "Supabase listContacts failed, falling back to file store",

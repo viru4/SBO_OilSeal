@@ -70,11 +70,20 @@ export async function addContact(
 
 export async function listContacts(
   status?: ContactStatus,
+  limit?: number,
+  offset?: number,
 ): Promise<ContactRecord[]> {
   const db = getSupabaseAdmin();
   if (!db) throw new Error("Supabase not configured");
-  let q = db.from(Table).select().order("created_at", { ascending: false });
+  
+  let q = db.from(Table)
+    .select("*")
+    .order("created_at", { ascending: false });
+    
   if (status) q = q.eq("status", status);
+  if (limit) q = q.limit(limit);
+  if (offset) q = q.range(offset, offset + (limit || 50) - 1);
+  
   const { data, error } = await q;
   if (error) throw error;
   return (data as any[]).map((r) => map(Row.parse(r)));

@@ -33,14 +33,27 @@ function authHeaders(token?: string): Record<string, string> {
   return headers;
 }
 
-export async function listContacts(status?: ContactStatus, token?: string) {
-  const qs = status ? `?status=${encodeURIComponent(status)}` : "";
+export async function listContacts(
+  status?: ContactStatus, 
+  token?: string,
+  limit?: number,
+  offset?: number
+) {
+  const params = new URLSearchParams();
+  if (status) params.append('status', status);
+  if (limit) params.append('limit', limit.toString());
+  if (offset) params.append('offset', offset.toString());
+  
+  const qs = params.toString() ? `?${params.toString()}` : "";
   const res = await fetch(`${API_BASE}/contacts${qs}`, {
     headers: { ...authHeaders(token) },
   });
   if (!res.ok) throw new Error(`Failed to load contacts (${res.status})`);
   const data = await res.json();
-  return data.items as ContactRecord[];
+  return {
+    items: data.items as ContactRecord[],
+    pagination: data.pagination
+  };
 }
 
 export async function getContact(id: string, token?: string) {

@@ -35,8 +35,11 @@ export function createAdminRouter() {
         typeof req.query.status === "string"
           ? (req.query.status as any)
           : undefined;
-      const items = await listContacts(status);
-      res.json({ items });
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : 50;
+      const offset = req.query.offset ? parseInt(req.query.offset as string) : 0;
+      
+      const items = await listContacts(status, limit, offset);
+      res.json({ items, pagination: { limit, offset, hasMore: items.length === limit } });
     } catch (e) {
       console.error(e);
       res.status(500).json({ error: "Failed to load contacts" });
@@ -100,20 +103,59 @@ export function createAdminRouter() {
       if (!item) return res.status(404).json({ error: "Not found" });
       const message = parsed.data.message;
       const channel = parsed.data.channel;
+      
+      let notificationSent = false;
+      let notificationError = null;
+      
       if (channel === "email") {
         if (!item.email)
           return res.status(400).json({ error: "Contact has no email" });
-        await sendEmail(item.email, "Reply from SBO Oil Seals", message);
+        try {
+          await sendEmail(item.email, "Reply from SBO Oil Seals", message);
+          notificationSent = true;
+        } catch (e: any) {
+          notificationError = e.message;
+        }
       } else if (channel === "sms") {
         if (!item.phone)
           return res.status(400).json({ error: "Contact has no phone" });
-        await sendSMS(item.phone, message);
+        try {
+          await sendSMS(item.phone, message);
+          notificationSent = true;
+        } catch (e: any) {
+          notificationError = e.message;
+        }
       } else if (channel === "whatsapp") {
         if (!item.phone)
           return res.status(400).json({ error: "Contact has no phone" });
-        await sendWhatsApp(item.phone, message);
+        try {
+          await sendWhatsApp(item.phone, message);
+          notificationSent = true;
+        } catch (e: any) {
+          notificationError = e.message;
+        }
       }
-      res.json({ ok: true });
+      
+      // Always save the reply to database, even if notification fails
+      const updated = await updateContact(req.params.id, {
+        status: "replied",
+        reply: {
+          message: parsed.data.message,
+          repliedAt: new Date().toISOString(),
+        },
+      });
+      
+      if (notificationSent) {
+        res.json({ ok: true, item: updated, notification: "sent" });
+      } else {
+        res.json({ 
+          ok: true, 
+          item: updated, 
+          notification: "failed", 
+          error: notificationError,
+          message: "Reply saved to database, but notification failed. Check notification configuration."
+        });
+      }
     } catch (e: any) {
       console.error(e);
       res.status(500).json({ error: e?.message || "Failed to notify" });

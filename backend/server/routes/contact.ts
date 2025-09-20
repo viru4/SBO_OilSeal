@@ -14,29 +14,40 @@ const ContactSchema = z.object({
 });
 
 export const handleContact: RequestHandler = async (req, res) => {
-  const parsed = ContactSchema.safeParse(req.body as ContactRequest);
-  if (!parsed.success) {
-    return res.status(400).json({ ok: false, errors: parsed.error.flatten() });
-  }
-
-  const payload = parsed.data;
-  // In a real app, enqueue email/CRM here. For now, log safely and return success.
   try {
+    const parsed = ContactSchema.safeParse(req.body as ContactRequest);
+    if (!parsed.success) {
+      return res.status(400).json({ 
+        ok: false, 
+        errors: parsed.error.flatten(),
+        message: "Invalid contact data provided"
+      });
+    }
+
+    const payload = parsed.data;
+    
+    // Log contact request (sanitized)
     console.log("New contact request:", {
       name: payload.name,
       email: payload.email,
-      phone: payload.phone,
+      phone: payload.phone ? "***" : undefined,
       company: payload.company,
       product: payload.product,
       quantity: payload.quantity,
-      message: payload.message?.slice(0, 500),
+      message: payload.message?.slice(0, 100) + (payload.message?.length > 100 ? "..." : ""),
+      timestamp: new Date().toISOString()
     });
-  } catch {}
 
-  try {
+    // Save to database
     await addContact(payload);
-  } catch {}
 
-  const response: ContactResponse = { ok: true };
-  res.status(200).json(response);
+    const response: ContactResponse = { ok: true };
+    res.status(200).json(response);
+  } catch (error) {
+    console.error("Contact submission error:", error);
+    res.status(500).json({ 
+      ok: false, 
+      message: "Failed to process contact request" 
+    });
+  }
 };

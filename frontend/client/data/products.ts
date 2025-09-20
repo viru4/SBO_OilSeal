@@ -1,6 +1,6 @@
 import type { ProductItem } from "@/components/site/ProductCard";
 
-export const FEATURED_PRODUCTS: ProductItem[] = [
+export const ALL_PRODUCTS: ProductItem[] = [
   {
     title: "Fork Seal 31×43×10.5 mm",
     size: "31×43×10.5 mm",
@@ -43,4 +43,13 @@ export const FEATURED_PRODUCTS: ProductItem[] = [
     fits: "Common fits: Yamaha FZ/Fazer, KTM Duke (select models)",
     sku: "SBO-FS-4105411",
   },
+  {
+    title: "Fork Seal 41×54×11 mm",
+    size: "41×54×11 mm",
+    material: "FKM",
+    fits: "Common fits: Yamaha FZ/Fazer, KTM Duke (select models)",
+    sku: "SBO-FS-4105411",
+  },
 ];
+
+export const HOME_FEATURED_PRODUCTS = ALL_PRODUCTS.slice(0, 6);

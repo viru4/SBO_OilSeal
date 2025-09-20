@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import ProductCard from "@/components/site/ProductCard";
-import { FEATURED_PRODUCTS } from "@/data/products";
+import { HOME_FEATURED_PRODUCTS } from "@/data/products";
 import ContactForm from "@/components/site/ContactForm";
 import {
   CheckCircle2,
@@ -20,7 +20,7 @@ export default function Index() {
       <section className="relative overflow-hidden min-h-screen hero-background">
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-black/40 z-0" />
-        
+
         {/* Gradient overlay */}
         <div className="absolute inset-0 z-0">
           <div className="absolute left-1/2 top-[-10%] aspect-square w-[80rem] -translate-x-1/2 rounded-full bg-gradient-to-br from-primary/15 to-accent/15 blur-3xl" />
@@ -139,7 +139,7 @@ export default function Index() {
           </div>
 
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {FEATURED_PRODUCTS.map((p) => (
+            {HOME_FEATURED_PRODUCTS.map((p) => (
               <ProductCard key={p.sku} item={p} />
             ))}
           </div>
@@ -242,7 +242,7 @@ export default function Index() {
               <div className="grid grid-cols-2 gap-4">
                 <Stat label="Materials" value="NBR, FKM, PTFE" />
                 <Stat label="Fork Sizes" value="26–50mm" />
-                <Stat label="Tooling" value="In‑house" />
+                <Stat label="Tooling" value="In��house" />
                 <Stat label="MOQ" value="Flexible" />
               </div>
             </div>

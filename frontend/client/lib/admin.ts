@@ -16,7 +16,9 @@ export interface ContactRecord {
   notes?: string;
 }
 
-const API_BASE = "/api/admin";
+// Use environment variable for API base URL in production
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+const API_BASE = `${API_BASE_URL}/api/admin`;
 
 export function getToken() {
   return localStorage.getItem("admin_token") || "";

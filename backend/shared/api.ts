@@ -61,3 +61,52 @@ export interface ReviewStats {
     5: number;
   };
 }
+
+// Product interfaces
+export interface Product {
+  id: string;
+  title: string;
+  size: string;
+  material: string;
+  fits: string;
+  sku: string;
+  category?: string;
+  description?: string;
+  price?: number;
+  in_stock: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CreateProductRequest {
+  title: string;
+  size: string;
+  material: string;
+  fits: string;
+  sku: string;
+  category?: string;
+  description?: string;
+  price?: number;
+  in_stock?: boolean;
+}
+
+export interface UpdateProductRequest {
+  title?: string;
+  size?: string;
+  material?: string;
+  fits?: string;
+  sku?: string;
+  category?: string;
+  description?: string;
+  price?: number;
+  in_stock?: boolean;
+}
+
+export interface ProductsResponse {
+  products: Product[];
+  total: number;
+}
+
+export interface ProductResponse {
+  product: Product;
+}

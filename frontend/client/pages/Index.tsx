@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import ProductCard from "@/components/site/ProductCard";
 import { HOME_FEATURED_PRODUCTS } from "@/data/products";
+import { useFeaturedProducts } from "@/hooks/use-products";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import ContactForm from "@/components/site/ContactForm";
 import ReviewSystem from "@/components/site/ReviewSystem";
 import {
@@ -15,6 +17,8 @@ import {
 } from "lucide-react";
 
 export default function Index() {
+  const { productItems: featuredProducts, loading: loadingProducts } = useFeaturedProducts();
+
   return (
     <>
       {/* Hero */}
@@ -127,7 +131,7 @@ export default function Index() {
           <div className="flex items-end justify-between">
             <div>
               <h3 className="text-2xl font-bold tracking-tight">
-                Featured Shocker/Fork Seals
+                Featured Products
               </h3>
               <p className="mt-2 text-sm text-muted-foreground">
                 Representative sizes and SKUs. More options available on
@@ -140,9 +144,15 @@ export default function Index() {
           </div>
 
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {HOME_FEATURED_PRODUCTS.map((p) => (
-              <ProductCard key={p.sku} item={p} />
-            ))}
+            {loadingProducts ? (
+              <div className="col-span-full flex justify-center py-8">
+                <LoadingSpinner />
+              </div>
+            ) : (
+              (featuredProducts.length > 0 ? featuredProducts : HOME_FEATURED_PRODUCTS).map((p) => (
+                <ProductCard key={p.sku} item={p} />
+              ))
+            )}
           </div>
         </div>
       </section>
@@ -210,7 +220,7 @@ export default function Index() {
                   { k: "±0.02mm", v: "Typical Tolerances" },
                   { k: "AQL 1.0", v: "Inspection Levels" },
                   { k: "24–72h", v: "Prototype Leadtime" },
-                  { k: "3lac+/mo", v: "Scalable Output" },
+                  { k: "3 Lac+/mo", v: "Scalable Output" },
                 ].map((s) => (
                   <div
                     key={s.v}

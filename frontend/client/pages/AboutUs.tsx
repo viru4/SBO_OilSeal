@@ -10,14 +10,14 @@ export default function AboutUs() {
         <div className="relative bg-black/60 p-8 md:p-12">
           <div className="max-w-3xl">
             <Badge variant="outline" className="mb-4 bg-primary/10 text-primary">
-              Established 2003
+              Established 1999
             </Badge>
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
               About SBO Oil Seals
             </h1>
             <p className="text-gray-200 text-lg">
               Specializing in high-performance oil seals for the automotive industry,
-              with expertise in motorcycle shocker and fork seals for over 20 years.
+              with expertise in motorcycle shocker and fork seals for over 25 years.
             </p>
           </div>
         </div>
@@ -32,7 +32,7 @@ export default function AboutUs() {
         <div className="grid md:grid-cols-2 gap-8">
           <div>
             <p className="text-muted-foreground mb-4">
-              SBO Oil Seals was founded in 2003 with a vision to provide high-quality sealing 
+              SBO Oil Seals was founded in 1999 with a vision to provide high-quality sealing
               solutions specifically for the automotive sector. What began as a small workshop 
               has grown into a specialized manufacturing unit with state-of-the-art equipment.
             </p>
@@ -44,8 +44,8 @@ export default function AboutUs() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { value: "2003", label: "Year Founded" },
-              { value: "20+", label: "Years of Experience" },
+              { value: "1999", label: "Year Founded" },
+              { value: "25+", label: "Years of Experience" },
               { value: "500+", label: "Product SKUs" },
               { value: "300+", label: "Bike Models Supported" },
             ].map((item) => (

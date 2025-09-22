@@ -5,6 +5,14 @@ import { handleDemo } from "./routes/demo";
 import { handleContact } from "./routes/contact";
 import { createAdminRouter } from "./routes/admin";
 import { handleAddReview, handleListReviews, handleGetReviewStats } from "./routes/reviews";
+import {
+  handleGetAllProducts,
+  handleGetProductById,
+  handleGetProductBySku,
+  handleCreateProduct,
+  handleUpdateProduct,
+  handleDeleteProduct
+} from "./routes/products";
 
 export function createServer() {
   const app = express();
@@ -58,6 +66,14 @@ export function createServer() {
   app.post("/api/reviews", handleAddReview);
   app.get("/api/reviews", handleListReviews);
   app.get("/api/reviews/stats", handleGetReviewStats);
+
+  // Products API routes
+  app.get("/api/products", handleGetAllProducts);
+  app.get("/api/products/:id", handleGetProductById);
+  app.get("/api/products/sku/:sku", handleGetProductBySku);
+  app.post("/api/products", handleCreateProduct);
+  app.put("/api/products/:id", handleUpdateProduct);
+  app.delete("/api/products/:id", handleDeleteProduct);
 
   app.use("/api/admin", createAdminRouter());
 

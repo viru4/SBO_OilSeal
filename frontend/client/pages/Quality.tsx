@@ -14,7 +14,7 @@ export default function Quality() {
     { k: "±0.02mm", v: "Typical Tolerances" },
     { k: "AQL 1.0", v: "Inspection Levels" },
     { k: "24–72h", v: "Prototype Leadtime" },
-    { k: "10K+/mo", v: "Scalable Output" },
+    { k: "3 Lac+/mo", v: "Scalable Output" },
   ];
   return (
     <>

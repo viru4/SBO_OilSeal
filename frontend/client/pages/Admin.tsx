@@ -4,7 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
+import ProductsAdmin from "@/components/site/ProductsAdmin";
 import {
   getToken,
   setToken,
@@ -223,147 +225,162 @@ export default function AdminPage() {
   if (!authed) return <AdminLogin onSuccess={() => setAuthed(true)} />;
 
   return (
-    <div className="container py-8 grid gap-6 lg:grid-cols-3">
-      <div className="lg:col-span-1">
-        <Card>
-          <CardHeader>
-            <CardTitle>Requests & Inquiries</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-2">
-            {loading && !items.length && (
-              <div className="text-sm text-muted-foreground">Loading...</div>
-            )}
-            {!loading && items.length === 0 && (
-              <div className="text-sm text-muted-foreground">
-                No requests yet.
-              </div>
-            )}
-            {items.map((i) => (
-              <ContactRow key={i.id} item={i} onSelect={setActiveId} />
-            ))}
-            {hasMore && (
-              <Button 
-                variant="outline" 
-                onClick={() => {
-                  const nextPage = currentPage + 1;
-                  setCurrentPage(nextPage);
-                  loadContacts(nextPage, true);
-                }}
-                disabled={loading}
-                className="mt-2"
-              >
-                {loading ? "Loading..." : "Load More"}
-              </Button>
-            )}
-            {totalCount > 0 && (
-              <div className="text-xs text-muted-foreground text-center mt-2">
-                Showing {totalCount} contacts
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="lg:col-span-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Conversation</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-4">
-            {!active && (
-              <div className="text-sm text-muted-foreground">
-                Select a request on the left.
-              </div>
-            )}
-            {active && (
-              <div className="grid gap-3">
-                <div className="rounded-md border p-3 bg-background">
-                  <div className="flex items-center justify-between">
-                    <div className="font-medium">
-                      {active.name} • {active.email}
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      {new Date(active.createdAt).toLocaleString()}
-                    </div>
-                  </div>
-                  <div className="mt-2 text-sm whitespace-pre-wrap">
-                    {active.message}
-                  </div>
-                </div>
-                {active.reply && (
-                  <div className="rounded-md border p-3 bg-muted/30">
-                    <div className="text-xs text-muted-foreground">
-                      Replied on{" "}
-                      {new Date(active.reply.repliedAt).toLocaleString()}
-                    </div>
-                    <div className="mt-1 text-sm whitespace-pre-wrap">
-                      {active.reply.message}
-                    </div>
-                  </div>
-                )}
-                <div className="rounded-md border p-3 bg-background">
-                  <div className="text-sm font-medium">Customer details</div>
-                  <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
-                    <div>
-                      <span className="text-muted-foreground">Status:</span>{" "}
-                      <span className="uppercase">{active.status}</span>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Updated:</span>{" "}
-                      {new Date(active.updatedAt).toLocaleString()}
-                    </div>
-                    {active.phone && (
-                      <div>
-                        <span className="text-muted-foreground">Phone:</span>{" "}
-                        <span className="break-all">{active.phone}</span>
-                      </div>
-                    )}
-                    {active.company && (
-                      <div>
-                        <span className="text-muted-foreground">Company:</span>{" "}
-                        <span className="break-all">{active.company}</span>
-                      </div>
-                    )}
-                    {active.product && (
-                      <div>
-                        <span className="text-muted-foreground">Product:</span>{" "}
-                        <span className="break-all">{active.product}</span>
-                      </div>
-                    )}
-                    {active.quantity !== undefined &&
-                      active.quantity !== null && (
-                        <div>
-                          <span className="text-muted-foreground">
-                            Quantity:
-                          </span>{" "}
-                          <span className="break-all">
-                            {String(active.quantity)}
-                          </span>
-                        </div>
-                      )}
-                  </div>
-                  {active.notes && (
-                    <div className="mt-3">
-                      <div className="text-sm text-muted-foreground">Notes</div>
-                      <div className="mt-1 text-sm whitespace-pre-wrap">
-                        {active.notes}
-                      </div>
+    <div className="container py-8">
+      <Tabs defaultValue="contacts" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="contacts">Contacts & Inquiries</TabsTrigger>
+          <TabsTrigger value="products">Products Management</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="contacts" className="mt-6">
+          <div className="grid gap-6 lg:grid-cols-3">
+            <div className="lg:col-span-1">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Requests & Inquiries</CardTitle>
+                </CardHeader>
+                <CardContent className="grid gap-2">
+                  {loading && !items.length && (
+                    <div className="text-sm text-muted-foreground">Loading...</div>
+                  )}
+                  {!loading && items.length === 0 && (
+                    <div className="text-sm text-muted-foreground">
+                      No requests yet.
                     </div>
                   )}
-                </div>
-                <ReplyBox
-                  current={active}
-                  onDone={(u) => {
-                    setItems((prev) =>
-                      prev.map((it) => (it.id === u.id ? u : it)),
-                    );
-                  }}
-                />
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+                  {items.map((i) => (
+                    <ContactRow key={i.id} item={i} onSelect={setActiveId} />
+                  ))}
+                  {hasMore && (
+                    <Button 
+                      variant="outline" 
+                      onClick={() => {
+                        const nextPage = currentPage + 1;
+                        setCurrentPage(nextPage);
+                        loadContacts(nextPage, true);
+                      }}
+                      disabled={loading}
+                      className="mt-2"
+                    >
+                      {loading ? "Loading..." : "Load More"}
+                    </Button>
+                  )}
+                  {totalCount > 0 && (
+                    <div className="text-xs text-muted-foreground text-center mt-2">
+                      Showing {totalCount} contacts
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="lg:col-span-2">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Conversation</CardTitle>
+                </CardHeader>
+                <CardContent className="grid gap-4">
+                  {!active && (
+                    <div className="text-sm text-muted-foreground">
+                      Select a request on the left.
+                    </div>
+                  )}
+                  {active && (
+                    <div className="grid gap-3">
+                      <div className="rounded-md border p-3 bg-background">
+                        <div className="flex items-center justify-between">
+                          <div className="font-medium">
+                            {active.name} • {active.email}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {new Date(active.createdAt).toLocaleString()}
+                          </div>
+                        </div>
+                        <div className="mt-2 text-sm whitespace-pre-wrap">
+                          {active.message}
+                        </div>
+                      </div>
+                      {active.reply && (
+                        <div className="rounded-md border p-3 bg-muted/30">
+                          <div className="text-xs text-muted-foreground">
+                            Replied on{" "}
+                            {new Date(active.reply.repliedAt).toLocaleString()}
+                          </div>
+                          <div className="mt-1 text-sm whitespace-pre-wrap">
+                            {active.reply.message}
+                          </div>
+                        </div>
+                      )}
+                      <div className="rounded-md border p-3 bg-background">
+                        <div className="text-sm font-medium">Customer details</div>
+                        <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+                          <div>
+                            <span className="text-muted-foreground">Status:</span>{" "}
+                            <span className="uppercase">{active.status}</span>
+                          </div>
+                          <div>
+                            <span className="text-muted-foreground">Updated:</span>{" "}
+                            {new Date(active.updatedAt).toLocaleString()}
+                          </div>
+                          {active.phone && (
+                            <div>
+                              <span className="text-muted-foreground">Phone:</span>{" "}
+                              <span className="break-all">{active.phone}</span>
+                            </div>
+                          )}
+                          {active.company && (
+                            <div>
+                              <span className="text-muted-foreground">Company:</span>{" "}
+                              <span className="break-all">{active.company}</span>
+                            </div>
+                          )}
+                          {active.product && (
+                            <div>
+                              <span className="text-muted-foreground">Product:</span>{" "}
+                              <span className="break-all">{active.product}</span>
+                            </div>
+                          )}
+                          {active.quantity !== undefined &&
+                            active.quantity !== null && (
+                              <div>
+                                <span className="text-muted-foreground">
+                                  Quantity:
+                                </span>{" "}
+                                <span className="break-all">
+                                  {String(active.quantity)}
+                                </span>
+                              </div>
+                            )}
+                        </div>
+                        {active.notes && (
+                          <div className="mt-3">
+                            <div className="text-sm text-muted-foreground">Notes</div>
+                            <div className="mt-1 text-sm whitespace-pre-wrap">
+                              {active.notes}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      <ReplyBox
+                        current={active}
+                        onDone={(u) => {
+                          setItems((prev) =>
+                            prev.map((it) => (it.id === u.id ? u : it)),
+                          );
+                        }}
+                      />
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </TabsContent>
+        
+        <TabsContent value="products" className="mt-6">
+          <ProductsAdmin />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

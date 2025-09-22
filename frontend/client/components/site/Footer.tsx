@@ -7,7 +7,7 @@ export default function Footer() {
         <div>
           <div className="text-xl font-bold">SBO OilSeals</div>
           <p className="mt-3 text-sm text-muted-foreground">
-            Precision oil seals engineered for reliability. Over 20 years of
+            Precision oil seals engineered for reliability. Over 25+ years of
             manufacturing excellence.
           </p>
         </div>
@@ -46,19 +46,19 @@ export default function Footer() {
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
               <a
-                href="mailto:sales@sbooilseals.com"
+                href="mailto:ravi24827@gmail.com"
                 className="hover:text-primary"
               >
-                sales@sbooilseals.com
+                ravi24827@gmail.com
               </a>
             </li>
-            <li>
+            {/* <li>
               <a href="tel:+11234567890" className="hover:text-primary">
                 +1 (123) 456-7890
               </a>
-            </li>
-            <li>Mon–Fri, 9:00–18:00</li>
-            <li>Ahmedabad, India</li>
+            </li> */}
+            <li>Mon–Sat, 9:00–18:00</li>
+            <li>Delhi, India</li>
           </ul>
         </div>
         <div>

@@ -17,18 +17,30 @@ function ProductCard({ item }: ProductCardProps) {
   return (
     <Card className="transition hover:shadow-lg">
       <CardContent className="p-6">
-        <div className="flex items-start justify-between gap-3">
+        {/* Product title and material */}
+        <div className="flex items-start justify-between gap-3 mb-4">
           <div>
             <h3 className="text-base font-semibold leading-tight">
               {item.title}
             </h3>
-            <p className="mt-1 text-xs text-muted-foreground">{item.fits}</p>
           </div>
           <span className="rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
             {item.material}
           </span>
         </div>
-        <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+
+        {/* Compatible with section - eye-catching */}
+        <div className="mb-4">
+          <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 px-4 py-2 border border-primary/30">
+            <div className="h-2 w-2 rounded-full bg-primary animate-pulse"></div>
+            <span className="text-sm font-semibold text-primary">
+              {item.fits}
+            </span>
+          </div>
+        </div>
+
+        {/* Size and SKU info */}
+        <div className="grid grid-cols-2 gap-3 text-sm">
           <div className="rounded-md border bg-background p-3">
             <div className="text-xs text-muted-foreground">Size</div>
             <div className="font-medium">{item.size}</div>

@@ -18,6 +18,7 @@ const Products = lazy(() => import("./pages/Products"));
 const Industries = lazy(() => import("./pages/Industries"));
 const Quality = lazy(() => import("./pages/Quality"));
 const Contact = lazy(() => import("./pages/Contact"));
+const AboutUs = lazy(() => import("./pages/AboutUs"));
 const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -55,7 +56,12 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
+          <BrowserRouter
+            future={{
+              v7_startTransition: true,
+              v7_relativeSplatPath: true,
+            }}
+          >
             <Routes>
               <Route element={<Layout />}>
                 <Route
@@ -95,6 +101,14 @@ const App = () => (
                   element={
                     <Suspense fallback={<LoadingSpinner />}>
                       <Contact />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/AboutUs"
+                  element={
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <AboutUs />
                     </Suspense>
                   }
                 />

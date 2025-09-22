@@ -24,3 +24,40 @@ export interface ContactRequest {
 export interface ContactResponse {
   ok: boolean;
 }
+
+export interface ReviewRequest {
+  productRating: number;
+  deliveryRating: number;
+  responseRating: number;
+  name: string;
+  email?: string;
+  phone?: string;
+  comment?: string;
+}
+
+export interface ReviewResponse {
+  id: string;
+  createdAt: string;
+  productRating: number;
+  deliveryRating: number;
+  responseRating: number;
+  name: string;
+  email?: string;
+  phone?: string;
+  comment?: string;
+}
+
+export interface ReviewStats {
+  totalReviews: number;
+  averageProductRating: number;
+  averageDeliveryRating: number;
+  averageResponseRating: number;
+  overallRating: number;
+  ratingDistribution: {
+    1: number;
+    2: number;
+    3: number;
+    4: number;
+    5: number;
+  };
+}

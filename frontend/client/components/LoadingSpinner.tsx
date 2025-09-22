@@ -18,7 +18,7 @@ export default function LoadingSpinner({
   };
 
   return (
-    <div className={`flex flex-col items-center justify-center p-8 ${className}`}>
+    <div className={`flex flex-col items-center justify-center p-8 min-h-[200px] ${className}`}>
       <Loader2 className={`${sizeClasses[size]} animate-spin text-primary`} />
       {text && (
         <p className="mt-2 text-sm text-muted-foreground">{text}</p>

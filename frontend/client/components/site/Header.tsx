@@ -11,6 +11,7 @@ const nav = [
   { to: "/industries", label: "Industries" },
   { to: "/quality", label: "Quality" },
   { to: "/contact", label: "Contact" },
+  { to: "/AboutUs", label: "About Us" },
 ];
 
 export default function Header() {

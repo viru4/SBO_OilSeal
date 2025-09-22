@@ -4,6 +4,7 @@ import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { handleContact } from "./routes/contact";
 import { createAdminRouter } from "./routes/admin";
+import { handleAddReview, handleListReviews, handleGetReviewStats } from "./routes/reviews";
 
 export function createServer() {
   const app = express();
@@ -31,7 +32,7 @@ export function createServer() {
     const startTime = Date.now();
     res.on('finish', () => {
       const duration = Date.now() - startTime;
-      res.setHeader('X-Response-Time', `${duration}ms`);
+      console.log(`Request processed in ${duration}ms`);
     });
     next();
   });
@@ -53,6 +54,10 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
   app.post("/api/contact", handleContact);
+
+  app.post("/api/reviews", handleAddReview);
+  app.get("/api/reviews", handleListReviews);
+  app.get("/api/reviews/stats", handleGetReviewStats);
 
   app.use("/api/admin", createAdminRouter());
 

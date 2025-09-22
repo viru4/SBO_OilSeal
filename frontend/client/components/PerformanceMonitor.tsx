@@ -9,8 +9,8 @@ export default function PerformanceMonitor({ children }: PerformanceMonitorProps
   // const { measureRender } = usePerformance(); // Available for future use
 
   useEffect(() => {
-    // Monitor Core Web Vitals
-    if (typeof window !== 'undefined' && 'PerformanceObserver' in window) {
+    // Only monitor in development or when explicitly enabled
+    if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined' && 'PerformanceObserver' in window) {
       // Largest Contentful Paint (LCP)
       const lcpObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
@@ -29,8 +29,9 @@ export default function PerformanceMonitor({ children }: PerformanceMonitorProps
       });
       fidObserver.observe({ entryTypes: ['first-input'] });
 
-      // Cumulative Layout Shift (CLS)
+      // Cumulative Layout Shift (CLS) - Only log once per session
       let clsValue = 0;
+      let clsLogged = false;
       const clsObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         entries.forEach((entry: any) => {
@@ -38,15 +39,22 @@ export default function PerformanceMonitor({ children }: PerformanceMonitorProps
             clsValue += entry.value;
           }
         });
-        console.log('CLS:', clsValue);
+        if (!clsLogged && clsValue > 0.1) {
+          console.log('CLS:', clsValue);
+          clsLogged = true;
+        }
       });
       clsObserver.observe({ entryTypes: ['layout-shift'] });
 
-      // First Contentful Paint (FCP)
+      // First Contentful Paint (FCP) - Only log once
+      let fcpLogged = false;
       const fcpObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         entries.forEach((entry) => {
-          console.log('FCP:', entry.startTime);
+          if (!fcpLogged) {
+            console.log('FCP:', entry.startTime);
+            fcpLogged = true;
+          }
         });
       });
       fcpObserver.observe({ entryTypes: ['paint'] });

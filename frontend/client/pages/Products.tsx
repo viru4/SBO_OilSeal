@@ -11,7 +11,7 @@ export default function Products() {
         </h1>
         <p className="mt-3 text-muted-foreground">
           Specialized in motorcycle fork/shocker seals. Also producing
-          high��precision automotive oil seals for engines, transmissions, and
+          high precision automotive oil seals for engines, transmissions, and
           wheel hubs.
         </p>
       </div>

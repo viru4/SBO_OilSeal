@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import ProductCard from "@/components/site/ProductCard";
 import { HOME_FEATURED_PRODUCTS } from "@/data/products";
 import ContactForm from "@/components/site/ContactForm";
+import ReviewSystem from "@/components/site/ReviewSystem";
 import {
   CheckCircle2,
   Cog,
@@ -28,7 +29,7 @@ export default function Index() {
         <div className="container flex flex-col items-center gap-8 py-16 sm:py-24 relative z-10">
           <div className="inline-flex items-center gap-2 rounded-full border bg-white/80 px-3 py-1 text-xs text-gray-700 backdrop-blur shadow-lg">
             <ShieldCheck className="h-4 w-4 text-primary" /> Automotive sealing
-            specialists — 20+ years
+            specialists — 25+ years
           </div>
           <h1 className="max-w-4xl text-center text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-white drop-shadow-lg">
             Automotive Oil Seals — Specialized in Motorcycle Shocker/Fork Seals
@@ -48,7 +49,7 @@ export default function Index() {
           </div>
           <div className="grid w-full max-w-4xl grid-cols-2 gap-3 rounded-xl border bg-white/90 backdrop-blur p-4 text-center sm:grid-cols-4 shadow-xl">
             {[
-              { value: "20+", label: "Years Experience" },
+              { value: "25+", label: "Years Experience" },
               { value: "500+", label: "SKU Library" },
               { value: "300+", label: "Bike Models Supported" },
               { value: "99.8%", label: "On‑Time Delivery" },
@@ -79,7 +80,7 @@ export default function Index() {
             {
               icon: Gauge,
               title: "Fork/Shocker Oil Seals",
-              desc: "Low stiction, high wear resistance for motorcycle front suspension.",
+              desc: "High-performance seals for motorcycles and scooters. Corrosion Free, Shrink Free, Low Friction, High sealing performance",
             },
             {
               icon: Cog,
@@ -209,7 +210,7 @@ export default function Index() {
                   { k: "±0.02mm", v: "Typical Tolerances" },
                   { k: "AQL 1.0", v: "Inspection Levels" },
                   { k: "24–72h", v: "Prototype Leadtime" },
-                  { k: "10K+/mo", v: "Scalable Output" },
+                  { k: "3lac+/mo", v: "Scalable Output" },
                 ].map((s) => (
                   <div
                     key={s.v}
@@ -242,7 +243,7 @@ export default function Index() {
               <div className="grid grid-cols-2 gap-4">
                 <Stat label="Materials" value="NBR, FKM, PTFE" />
                 <Stat label="Fork Sizes" value="26–50mm" />
-                <Stat label="Tooling" value="In��house" />
+                <Stat label="Tooling" value="In house" />
                 <Stat label="MOQ" value="Flexible" />
               </div>
             </div>
@@ -250,6 +251,7 @@ export default function Index() {
           <ContactForm />
         </div>
       </section>
+      <ReviewSystem />
     </>
   );
 }

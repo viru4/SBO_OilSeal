@@ -20,7 +20,11 @@ export function createServer() {
   // Middleware
   app.use(cors({
     origin: process.env.NODE_ENV === 'production' 
-      ? ['https://your-domain.com'] 
+      ? [
+          process.env.FRONTEND_URL || 'https://your-netlify-domain.netlify.app',
+          /\.netlify\.app$/,
+          /localhost:\d+$/
+        ]
       : true,
     credentials: true
   }));

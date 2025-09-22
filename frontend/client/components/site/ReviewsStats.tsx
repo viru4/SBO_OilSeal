@@ -13,7 +13,8 @@ export function ReviewsStats() {
   const fetchStats = useCallback(async (signal: AbortSignal) => {
     try {
       setLoading(true);
-      const response = await fetch('/api/reviews/stats', { signal });
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+      const response = await fetch(`${API_BASE_URL}/api/reviews/stats`, { signal });
       
       if (!response.ok) {
         throw new Error(`Failed to fetch review stats: ${response.statusText}`);

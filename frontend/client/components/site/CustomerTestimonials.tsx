@@ -20,7 +20,8 @@ export function CustomerTestimonials({ limit = 6, className = "" }: CustomerTest
   const fetchReviews = useCallback(async (signal: AbortSignal) => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/reviews?limit=${limit}`, { signal });
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+      const response = await fetch(`${API_BASE_URL}/api/reviews?limit=${limit}`, { signal });
       
       if (!response.ok) {
         throw new Error(`Failed to fetch reviews: ${response.statusText}`);

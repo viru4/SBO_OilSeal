@@ -61,7 +61,8 @@ function ContactForm() {
 
     try {
       setSubmitting(true);
-      const res = await fetch("/api/contact", {
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+      const res = await fetch(`${API_BASE_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

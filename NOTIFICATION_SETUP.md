@@ -86,8 +86,10 @@ SMTP_FROM=your-email@gmail.com
 ```env
 # Supabase Configuration
 SUPABASE_URL=https://evvgftbewmjomxyscphr.supabase.co
-SUPABASE_SERVICE_ROLE=your_service_role_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 SUPABASE_ANON_KEY=your_anon_key
+
+Note: the backend also accepts the legacy `SUPABASE_SERVICE_ROLE` environment variable for backward compatibility.
 
 # Admin Configuration
 ADMIN_TOKEN=0373e9319620e77bc5ac0a480e331a91aac0eac247ffc1dca3f1f0783f74aa1f

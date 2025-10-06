@@ -3,9 +3,9 @@ import type { ContactRecord, ContactStatus } from "./contacts";
 import * as fsStore from "./contacts";
 import * as sbStore from "./contacts-supabase";
 
-const useSupabase = !!(
-  process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE
-);
+// Prefer the new SUPABASE_SERVICE_ROLE_KEY env var; fall back to SUPABASE_SERVICE_ROLE
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SERVICE_ROLE;
+const useSupabase = !!(process.env.SUPABASE_URL && supabaseKey);
 
 export const addContact = async (input: ContactRequest) => {
   if (useSupabase) {

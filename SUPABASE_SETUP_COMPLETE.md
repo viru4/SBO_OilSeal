@@ -25,7 +25,7 @@ Create a `.env` file in the `backend/` directory:
 ```env
 # Supabase Configuration
 SUPABASE_URL=https://your-project-id.supabase.co
-SUPABASE_SERVICE_ROLE=your_service_role_key_here
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
 SUPABASE_ANON_KEY=your_anon_key_here
 
 # Admin Configuration
@@ -107,7 +107,7 @@ CREATE POLICY "Allow service role full access" ON contacts
 
 ### Automatic Detection
 The backend automatically detects Supabase configuration:
-- If `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE` are set → Uses Supabase
+If `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` (or legacy `SUPABASE_SERVICE_ROLE`) are set → Uses Supabase
 - If not set → Falls back to file storage (`backend/data/contacts.json`)
 
 ### API Endpoints
@@ -128,7 +128,7 @@ All existing endpoints work with Supabase:
 ### Common Issues
 
 1. **"Supabase not configured" error**
-   - Check that `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE` are set
+   - Check that `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` (or legacy `SUPABASE_SERVICE_ROLE`) are set
    - Verify the values are correct (no extra spaces)
 
 2. **Database connection errors**
@@ -148,7 +148,7 @@ All existing endpoints work with Supabase:
 ```env
 # Required for Supabase
 SUPABASE_URL=https://your-project-id.supabase.co
-SUPABASE_SERVICE_ROLE=eyJ... (starts with eyJ)
+SUPABASE_SERVICE_ROLE_KEY=eyJ... (starts with eyJ)
 
 # Optional
 SUPABASE_ANON_KEY=eyJ... (for frontend direct access)
@@ -166,3 +166,6 @@ PORT=8080
 5. **Optional**: Set up real-time subscriptions or authentication
 
 Your Supabase integration is complete and ready to use! 🚀
+
+Note: the backend will also accept the legacy `SUPABASE_SERVICE_ROLE` variable for backward compatibility.
+Optional: the legacy `SUPABASE_SERVICE_ROLE` env var is still supported.

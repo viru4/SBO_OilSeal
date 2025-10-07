@@ -9,9 +9,9 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "16x16 32x32",
-      "type": "image/x-icon"
+      "src": "/favicon1.jpg",
+      "sizes": "16x16 32x32 48x48",
+      "type": "image/jpeg"
     },
     {
       "src": "/favicon1.jpg",

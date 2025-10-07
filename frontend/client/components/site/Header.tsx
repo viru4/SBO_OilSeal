@@ -33,7 +33,7 @@ export default function Header() {
     <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          {/* Replace Logo with favicon1.png */}
+          {/* Using favicon1.jpg as logo */}
           <img
             src="/favicon1.jpg"
             alt="SBO Oil Seals Logo"

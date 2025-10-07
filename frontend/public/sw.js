@@ -2,7 +2,7 @@
 const CACHE_NAME = 'sbo-oilseal-v2';
 const urlsToCache = [
   '/',
-  '/favicon.ico',
+  '/favicon1.jpg',
   '/placeholder.svg',
   '/robots.txt'
 ];

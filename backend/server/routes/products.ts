@@ -51,7 +51,28 @@ export const handleGetAllProducts: RequestHandler = async (req, res) => {
     res.json(result);
   } catch (error) {
     console.error("Error fetching products:", error);
-    res.status(500).json({ error: "Failed to fetch products" });
+    
+    // More detailed error logging for debugging
+    if (error instanceof Error) {
+      console.error("Error details:", {
+        message: error.message,
+        stack: error.stack,
+        name: error.name
+      });
+      
+      // Check for Supabase configuration errors
+      if (error.message.includes("Supabase not configured")) {
+        return res.status(500).json({ 
+          error: "Database configuration error",
+          details: "Supabase connection not properly configured. Check environment variables."
+        });
+      }
+    }
+    
+    res.status(500).json({ 
+      error: "Failed to fetch products",
+      details: error instanceof Error ? error.message : "Unknown error"
+    });
   }
 };
 

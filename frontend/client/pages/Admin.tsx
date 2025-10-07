@@ -97,7 +97,8 @@ function ReplyBox({
   const send = async () => {
     if (!current) return;
     if (!msg.trim()) return toast.error("Type a reply message");
-    const updated = await replyContact(current.id, msg.trim());
+    const token = getToken();
+    const updated = await replyContact(current.id, msg.trim(), token);
     setMsg("");
     onDone(updated);
     toast.success("Reply saved");
@@ -106,7 +107,8 @@ function ReplyBox({
     if (!current) return;
     if (!msg.trim()) return toast.error("Type a reply message");
     try {
-      await notifyContact(current.id, channel, msg.trim());
+      const token = getToken();
+      await notifyContact(current.id, channel, msg.trim(), token);
       toast.success(
         channel === "email"
           ? "Email sent"
@@ -160,7 +162,8 @@ function ReplyBox({
             type="button"
             variant="outline"
             onClick={async () => {
-              const u = await updateContactStatus(current.id, "closed");
+              const token = getToken();
+              const u = await updateContactStatus(current.id, "closed", token);
               onDone(u);
               toast.success("Marked closed");
             }}
@@ -196,7 +199,9 @@ export default function AdminPage() {
       const limit = 20; // Load 20 contacts at a time
       const offset = page * limit;
       
-      const result = await listContacts(undefined, undefined, limit, offset);
+      // Use the stored token for authentication
+      const token = getToken();
+      const result = await listContacts(undefined, token, limit, offset);
       const newItems = result.items || [];
       
       if (append) {

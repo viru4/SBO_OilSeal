@@ -10,7 +10,24 @@ function verifyToken(req: Parameters<RequestHandler>[0]) {
 }
 
 const requireOwner: RequestHandler = (req, res, next) => {
-  if (!verifyToken(req)) return res.status(401).json({ error: "Unauthorized" });
+  const auth = req.headers["authorization"] || "";
+  const token = auth.startsWith("Bearer ") ? auth.slice(7) : undefined;
+  const expected = process.env.ADMIN_TOKEN;
+  
+  console.log("Admin authentication check:", {
+    hasAuth: !!auth,
+    hasToken: !!token,
+    hasExpected: !!expected,
+    tokenLength: token?.length,
+    expectedLength: expected?.length,
+    tokensMatch: token === expected
+  });
+  
+  if (!verifyToken(req)) {
+    console.log("Admin authentication failed");
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+  console.log("Admin authentication successful");
   next();
 };
 

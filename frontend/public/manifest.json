@@ -1,0 +1,26 @@
+{
+  "name": "SBO Oil Seals",
+  "short_name": "SBO OilSeals",
+  "description": "Automotive Oil Seals & Motorcycle Shocker/Fork Seals manufacturer",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e40af",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon1.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "shopping", "automotive"],
+  "lang": "en",
+  "dir": "ltr"
+}

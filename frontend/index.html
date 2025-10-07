@@ -17,12 +17,12 @@
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
     
     <!-- Preload critical resources -->
-    <link rel="preload" href="/client/main.tsx" as="script" crossorigin />
-    <link rel="preload" href="/client/global.css" as="style" crossorigin />
+    <!-- Note: Vite will handle module preloading automatically in production -->
     
     <!-- Favicon and app icons -->
-    <link rel="icon" href="/favicon1.png" />
-    <link rel="apple-touch-icon" href="/favicon1.png" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/favicon1.jpg" />
+    <link rel="manifest" href="/manifest.json" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -37,10 +37,17 @@
     
     <!-- Performance hints -->
     <meta http-equiv="x-dns-prefetch-control" content="on" />
-    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="telephone=yes" />
+    
+    <!-- Mobile optimizations -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="SBO OilSeals" />
     
     <!-- Theme color -->
     <meta name="theme-color" content="#1e40af" />
+
   </head>
 
   <body>

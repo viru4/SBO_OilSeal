@@ -24,4 +24,30 @@ dist-ssr
 *.sw?
 
 .config/
-!.env
+# Ignore environment files and other secrets. Keep example envs in the repo.
+.env
+.env.*
+!.env.example
+
+# Local env overrides
+*.env.local
+**/*.env.local
+
+# Ignore common credential files and keys
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.jks
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# Other secret files
+secrets.json
+*.secret
+credentials
+.aws/credentials
+.docker/config.json
